@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 Route::prefix('/')->group(function () {
-    Route::get('register', [RegisterController::class, 'registerView'])->name('register.view');
+    Route::get('register', [RegisterController::class, 'registerView'])->name('register.view')->middleware('pembeli');
     Route::post('register-process', [RegisterController::class, 'registerProcess'])->name('register.process');
 
     Route::get('login', [RegisterController::class, 'registerView'])->name('login.view');
