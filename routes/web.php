@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::prefix('/')->group(function () {
+    Route::get('register', [RegisterController::class, 'registerView'])->name('register.view');
+    Route::post('register-process', [RegisterController::class, 'registerProcess'])->name('register.process');
+
+    Route::get('login', [RegisterController::class, 'registerView'])->name('login.view');
 });
