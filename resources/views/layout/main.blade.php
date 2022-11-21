@@ -38,7 +38,7 @@
     <!-- My JS -->
     @if ($title == 'menu')
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="{{ asset('assets/js/script.js') }}"></script>
+        {{-- <script src="{{ asset('assets/js/script.js') }}"></script> --}}
     @endif
 </body>
 

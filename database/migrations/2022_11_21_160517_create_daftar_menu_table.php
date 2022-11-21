@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('daftar_menu', function (Blueprint $table) {
             $table->id();
+            $table->string('name_menu');
+            $table->integer('price');
             $table->timestamps();
         });
     }

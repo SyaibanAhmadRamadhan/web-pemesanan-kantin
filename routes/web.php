@@ -34,4 +34,6 @@ Route::prefix('/')->group(function () {
 
     Route::get('profile', [ProfileController::class, 'profileView'])->name('profile.view')->middleware('pembeli');
     Route::put('profile-process', [ProfileController::class, 'profileEditProcess'])->name('profile.edit.proccess')->middleware('pembeli');
+
+    Route::post('pemesanan-process', [MenuController::class, 'pemesananProcess'])->name('pemesanan.process');
 });
