@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +20,11 @@ Route::get('/', function () {
 });
 
 Route::prefix('/')->group(function () {
-    Route::get('register', [RegisterController::class, 'registerView'])->name('register.view')->middleware('pembeli');
+    Route::get('register', [RegisterController::class, 'registerView'])->name('register.view');
     Route::post('register-process', [RegisterController::class, 'registerProcess'])->name('register.process');
 
-    Route::get('login', [RegisterController::class, 'registerView'])->name('login.view');
+    Route::get('login', [LoginController::class, 'loginView'])->name('login.view');
+    Route::post('login-process', [LoginController::class, 'loginProcess'])->name('login.process');
+
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 });
