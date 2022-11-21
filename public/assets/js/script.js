@@ -44,3 +44,19 @@ var swiper = new Swiper('.mySwiper-hero', {
 var x = window.matchMedia('(max-width: 750px)');
 myFunction(x); // Call listener function at run time
 x.addListener(myFunction); // Attach listener function on state changes
+
+const btn = document.querySelector('#modal-btn');
+btn.addEventListener('click', function () {
+  Swal.fire({
+    icon: 'success',
+    showConfirmButton: false,
+    timer: 1500,
+  });
+});
+
+
+var i = 0;
+function buttonClick() {
+  i++;
+  document.getElementById('inc').value = i;
+}
