@@ -18,7 +18,7 @@ class RegisterController extends Controller
     public function registerProcess(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required',
+            'username' => 'required|unique:users',
             'email' => 'email:rfc,dns|unique:users',
             'password' => 'min:6|confirmed',
         ]);

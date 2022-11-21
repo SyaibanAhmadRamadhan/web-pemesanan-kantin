@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('mobile_phone')->nullable();
             $table->enum('role', ['penjual', 'pembeli'])->default('pembeli');
             $table->enum('jenis_kelamin', ['pria', 'wanita'])->nullable();
+            $table->string('tanggal_lahir')->nullable();
             $table->string('password');
             $table->timestamps();
         });

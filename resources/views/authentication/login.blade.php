@@ -14,6 +14,11 @@
                         </div>
                         <div class="row justify-content-center pt-5">
                             <div class="col-lg-10">
+                                @if (session('error'))
+                                    <div class="alert alert-danger" role="alert" id="allert">
+                                        {{ session('error') }}
+                                    </div>
+                                @endif
                                 <form action="{{ route('login.process') }}" method="POST">
                                     @csrf
                                     <div class="mb-3">
@@ -38,5 +43,4 @@
         </section>
         <!-- auth Akhir -->
     </section>
-    <a href="{{ route('logout') }}">logout</a>
 @endsection

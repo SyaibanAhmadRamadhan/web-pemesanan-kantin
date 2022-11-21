@@ -34,8 +34,12 @@
     <!-- Bootstrap JavaScript Bundle with Popper -->
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <!-- My JS -->
-    <script src="{{ asset('assets/js/script.js') }}"></script>
+    @if ($title == 'menu')
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="{{ asset('assets/js/script.js') }}"></script>
+    @endif
 </body>
 
 </html>
