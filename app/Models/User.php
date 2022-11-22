@@ -18,14 +18,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
         'username',
-        'jenis_kelamin',
-        'mobile_phone',
-        'role',
         'password',
-        'tanggal_lahir'
+        'role'
     ];
 
     /**
@@ -45,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getProfilePembeli()
+    {
+        return $this->belongsTo(PembeliModel::class, 'id');
+    }
 }

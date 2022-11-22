@@ -16,12 +16,8 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('username');
-            $table->string('name')->nullable();
             $table->string('email')->unique();
-            $table->string('mobile_phone')->nullable();
             $table->enum('role', ['penjual', 'pembeli'])->default('pembeli');
-            $table->enum('jenis_kelamin', ['pria', 'wanita'])->nullable();
-            $table->string('tanggal_lahir')->nullable();
             $table->string('password');
             $table->timestamps();
         });

@@ -50,7 +50,9 @@
                                             <p class="my-auto">:</p>
                                         </div>
                                         <div class="col">
-                                            <input type="text" disabled name="name" value="{{ Auth()->user()->name }}"
+                                            <input type="text" disabled name="name"
+                                                @if ($profile == null) @else
+                                value="{{ $profile->name }}" @endif
                                                 class="form-control" />
                                         </div>
                                     </div>
@@ -75,7 +77,9 @@
                                         </div>
                                         <div class="col">
                                             <input type="number" disabled name="mobile_phone"
-                                                value="{{ Auth()->user()->mobile_phone }}" class="form-control" />
+                                                @if ($profile == null) @else
+                                value="{{ $profile->mobile_phone }}" @endif
+                                                class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -87,7 +91,9 @@
                                         </div>
                                         <div class="col">
                                             <input type="text" disabled name="jenis_kelamin"
-                                                value="{{ Auth()->user()->jenis_kelamin }}" class="form-control" />
+                                                @if ($profile == null) @else
+                                value="{{ $profile->jenis_kelamin }}" @endif
+                                                class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -99,7 +105,9 @@
                                         </div>
                                         <div class="col">
                                             <input type="text" disabled name="tanggal_lahir"
-                                                value="{{ Auth()->user()->tanggal_lahir }}" class="form-control" />
+                                                @if ($profile == null) @else
+                                            value="{{ $profile->tanggal_lahir }}" @endif
+                                                class="form-control" />
                                         </div>
                                     </div>
                                     <div class="d-grid gap-2 d-md-block text-center">
@@ -140,7 +148,9 @@
                         <div class="form-group">
                             <label for="name" class="col-form-label">Name:</label>
                             <input type="text" name="name" class="form-control"
-                                value="{{ Auth()->user()->name }}" id="name">
+                                @if ($profile == null) @else
+                                value="{{ $profile->name }}" @endif
+                                id="name">
                         </div>
                         <div class="form-group">
                             <label for="email" class="col-form-label">Email:</label>
@@ -158,20 +168,38 @@
                         <div class="form-group">
                             <label for="mobile_phone" class="col-form-label">No. Telepon:</label>
                             <input type="text" name="mobile_phone" class="form-control"
-                                value="{{ Auth()->user()->mobile_phone }}" id="mobile_phone">
+                                @if ($profile == null) @else
+                                @error('mobile_phone')
+                                    value="{{ old('mobile_phone') }}"
+                                @else
+                                    value="{{ $profile->mobile_phone }}"
+                                @enderror @endif
+                                @error('mobile_phone')
+                                    value="{{ old('mobile_phone') }}"
+                                @enderror
+                                id="mobile_phone">
+                            @error('mobile_phone')
+                                <div class="error" style="color: red">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="form-group">
                             <label class="col-form-label">Jenis Kelamin:</label>
                             <div class="form-check">
                                 <input class="form-check-input" name="jenis_kelamin" type="radio" value="pria"
-                                    id="pria" @if (Auth()->user()->jenis_kelamin == 'pria') checked @endif>
+                                    @if ($profile == null) @else
+                                @if ($profile->jenis_kelamin == 'pria') checked @endif
+                                    @endif
+                                id="pria" >
                                 <label class="form-check-label" for="pria">
                                     pria
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" name="jenis_kelamin" type="radio" value="wanita"
-                                    id="wanita" @if (Auth()->user()->jenis_kelamin == 'wanita') checked @endif>
+                                    id="wanita"
+                                    @if ($profile == null) @else
+                                @if ($profile->jenis_kelamin == 'wanita') checked @endif
+                                    @endif>
                                 <label class="form-check-label" for="wanita">
                                     wanita
                                 </label>
@@ -180,7 +208,9 @@
                         <div class="form-group">
                             <label for="tanggal_lahir" class="col-form-label">Tanggal Lahir:</label>
                             <input type="date" class="form-control" name="tanggal_lahir"
-                                value="{{ Auth()->user()->tanggal_lahir }}" id="tanggal_lahir">
+                                @if ($profile == null) @else
+                                value="{{ $profile->tanggal_lahir }}" @endif
+                                id="tanggal_lahir">
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">Simpan</button>

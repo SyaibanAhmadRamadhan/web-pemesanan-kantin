@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('penjual', function (Blueprint $table) {
+        Schema::create('pembeli', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_penjual')->constrained('users')->onDelete('CASCADE')->onUpdate('CASCADE');
-            $table->string('nama');
-            $table->string('nama_warung');
-            $table->string('lokasi');
-            $table->string('nomer_telepon');
+            $table->foreignId('id_pembeli')->constrained('users')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->string('name')->nullable();
+            $table->string('mobile_phone')->nullable();
+            $table->enum('jenis_kelamin', ['pria', 'wanita'])->nullable();
+            $table->string('tanggal_lahir')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('penjual');
+        Schema::dropIfExists('pembeli');
     }
 };
