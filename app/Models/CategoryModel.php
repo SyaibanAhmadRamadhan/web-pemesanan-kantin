@@ -14,8 +14,8 @@ class CategoryModel extends Model
         'id', 'name_category'
     ];
 
-    public function getMenu()
+    public function getMenu($param)
     {
-        return $this->hasMany(DaftarMenuModel::class, 'id_category');
+        return $this->hasMany(DaftarMenuModel::class, 'id_category')->where('name_menu', 'LIKE', '%' . $param . '%')->get();
     }
 }

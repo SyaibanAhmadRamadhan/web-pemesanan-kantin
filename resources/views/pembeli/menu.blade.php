@@ -10,11 +10,14 @@
             <div class="container py-3">
                 <div class="row justify-content-center">
                     <div class="col-lg-7">
-                        <div class="input-group rounded-pill bg-white shadow-primary">
-                            <input class="form-control border-0 rounded-pill ps-4" type="search" placeholder="Search"
-                                aria-label="Search" />
-                            <span class="btn" id="basic-addon2"><i class="bi bi-search"></i></span>
-                        </div>
+                        <form action="{{ route('search.view') }}">
+                            <div class="input-group rounded-pill bg-white shadow-primary">
+                                <input id="search_menu" name="search" class="form-control border-0 rounded-pill ps-4"
+                                    type="search" @if (isset($_GET['search'])) value="{{ $_GET['search'] }}" @endif
+                                    placeholder="Search" aria-label="Search" />
+                                <button class="btn" id="basic-addon2"><i class="bi bi-search"></i></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -25,65 +28,73 @@
         @if (Auth()->user())
             <section id="menu">
                 <div class="container-fluid px-5">
-                    @foreach ($category as $key => $p)
-                        <div class="row">
-                            <div class="col-lg-12 px-3 py-2 bg-abu">
-                                <h3 class="my-0">{{ $p->name_category }}</h3>
-                            </div>
-                            @foreach ($p->getMenu as $x)
-                                <div class="col-lg-3 py-4">
-                                    <div class="card border-0 rounded-4">
-                                        <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ $x->name_menu }}</h5>
-                                            <a href="#" class="stretched-link" data-bs-toggle="modal"
-                                                data-bs-target="#modalmesan{{ $x->id }}"></a>
-                                            <input type="hidden" value="{{ $x->id }}"
-                                                id="menu_id{{ $x->id }}">
-                                            <p class="card-text text-danger">Rp. {{ $x->price }}</p>
+                    @if (count($category) == 0)
+                        <p style="text-align: center">menu tidak tersedia</p>
+                    @else
+                        @foreach ($category as $key => $p)
+                            <div class="row">
+                                <div class="col-lg-12 px-3 py-2 bg-abu">
+                                    <h3 class="my-0">{{ $p->name_category }}</h3>
+                                </div>
+                                @foreach ($p->getMenu($search) as $x)
+                                    <div class="col-lg-3 py-4">
+                                        <div class="card border-0 rounded-4">
+                                            <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4"
+                                                alt="..." />
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $x->name_menu }}</h5>
+                                                <a href="#" class="stretched-link" data-bs-toggle="modal"
+                                                    data-bs-target="#modalmesan{{ $x->id }}"></a>
+                                                <input type="hidden" value="{{ $x->id }}"
+                                                    id="menu_id{{ $x->id }}">
+                                                <p class="card-text text-danger">Rp. {{ $x->price }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="modal fade" id="modalmesan{{ $x->id }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
-                                                <div class="card border-0 rounded-4">
-                                                    <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4"
-                                                        alt="..." />
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">{{ $x->name_menu }}</h5>
-                                                        <p class="card-text text-danger">Rp. {{ $x->price }}</p>
-                                                        <div class="row mb-3">
-                                                            <div class="col-3 my-auto">
-                                                                <p class="my-auto">Qty</p>
-                                                            </div>
-                                                            <div class="col-1 my-auto">
-                                                                <p class="my-auto">:</p>
-                                                            </div>
-                                                            <div class="col">
-                                                                <input type="number" min="1" name="qty"
-                                                                    id="qty{{ $x->id }}" value="1"
-                                                                    class="form-control" />
+                                    <div class="modal fade" id="modalmesan{{ $x->id }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div class="card border-0 rounded-4">
+                                                        <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4"
+                                                            alt="..." />
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">{{ $x->name_menu }}</h5>
+                                                            <p class="card-text text-danger">Rp. {{ $x->price }}</p>
+                                                            <div class="row mb-3">
+                                                                <div class="col-3 my-auto">
+                                                                    <p class="my-auto">Qty</p>
+                                                                </div>
+                                                                <div class="col-1 my-auto">
+                                                                    <p class="my-auto">:</p>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <input type="number" min="1" name="qty"
+                                                                        id="qty{{ $x->id }}" value="1"
+                                                                        class="form-control" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Batal</button>
-                                                <button type="button" class="btn btn-primary"
-                                                    id="button_menu{{ $x->id }}"
-                                                    data-bs-dismiss="modal">Pesan</button>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Batal</button>
+                                                    <button type="button" class="btn btn-primary"
+                                                        id="button_menu{{ $x->id }}"
+                                                        data-bs-dismiss="modal">Pesan</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endforeach
+                                    @if (count($p->getMenu($search)) == 0)
+                                        <p style="text-align: center">menu tidak tersedia</p>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </section>
             <section id="pesanan" class="sticky-bottom bg-white overflow-hidden">
