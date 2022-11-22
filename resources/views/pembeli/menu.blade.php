@@ -25,102 +25,65 @@
         @if (Auth()->user())
             <section id="menu">
                 <div class="container-fluid px-5">
-                    <div class="row">
-                        <div class="col-lg-12 px-3 py-2 bg-abu">
-                            <h3 class="my-0">Soto Sate</h3>
-                        </div>
-                        <div class="col-lg-3 py-4">
-                            <div class="card border-0 rounded-4">
-                                <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title">Nasi Sate</h5>
-                                    <input type="hidden" value="nasi_sate" id="name_menu1">
-                                    <a href="#" class="stretched-link" data-bs-toggle="modal"
-                                        data-bs-target="#modalmesan1"></a>
-                                    <p class="card-text text-danger">Rp. 12.000</p>
-                                </div>
+                    @foreach ($category as $key => $p)
+                        <div class="row">
+                            <div class="col-lg-12 px-3 py-2 bg-abu">
+                                <h3 class="my-0">{{ $p->name_category }}</h3>
                             </div>
-                        </div>
-                        <div class="col-lg-3 py-4">
-                            <div class="card border-0 rounded-4">
-                                <img src="./assets/img/menu2.jpg" class="card-img-top rounded-4" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title">Nasi Sate</h5>
-                                    <input type="hidden" value="nasi_sate2" id="name_menu2">
-                                    <a href="#" class="stretched-link" data-bs-toggle="modal"
-                                        data-bs-target="#modalmesan2"></a>
-                                    <p class="card-text text-danger">Rp. 12.000</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 py-4">
-                            <div class="card border-0 rounded-4">
-                                <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title">Nasi Sate</h5>
-                                    <input type="hidden" value="nasi_sate3" id="name_menu3">
-                                    <a href="#" class="stretched-link" data-bs-toggle="modal"
-                                        data-bs-target="#modalmesan3"></a>
-                                    <p class="card-text text-danger">Rp. 12.000</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12 px-3 py-2 bg-abu">
-                            <h3 class="my-0">Kuliner Mandura Nyaman Oggu</h3>
-                        </div>
-                        @foreach ($menu as $x)
-                            <div class="col-lg-3 py-4">
-                                <div class="card border-0 rounded-4">
-                                    <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ $x->name_menu }}</h5>
-                                        <a href="#" class="stretched-link" data-bs-toggle="modal"
-                                            data-bs-target="#modalmesan{{ $x->id }}"></a>
-                                        <input type="hidden" value="{{ $x->id }}" id="menu_id{{ $x->id }}">
-                                        <p class="card-text text-danger">Rp. {{ $x->price }}</p>
+                            @foreach ($p->getMenu as $x)
+                                <div class="col-lg-3 py-4">
+                                    <div class="card border-0 rounded-4">
+                                        <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $x->name_menu }}</h5>
+                                            <a href="#" class="stretched-link" data-bs-toggle="modal"
+                                                data-bs-target="#modalmesan{{ $x->id }}"></a>
+                                            <input type="hidden" value="{{ $x->id }}"
+                                                id="menu_id{{ $x->id }}">
+                                            <p class="card-text text-danger">Rp. {{ $x->price }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal fade" id="modalmesan{{ $x->id }}" tabindex="-1"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <div class="card border-0 rounded-4">
-                                                <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4"
-                                                    alt="..." />
-                                                <div class="card-body">
-                                                    <h5 class="card-title">{{ $x->name_menu }}</h5>
-                                                    <p class="card-text text-danger">Rp. {{ $x->price }}</p>
-                                                    <div class="row mb-3">
-                                                        <div class="col-3 my-auto">
-                                                            <p class="my-auto">Qty</p>
-                                                        </div>
-                                                        <div class="col-1 my-auto">
-                                                            <p class="my-auto">:</p>
-                                                        </div>
-                                                        <div class="col">
-                                                            <input type="number" min="1" name="qty"
-                                                                id="qty{{ $x->id }}" value="1"
-                                                                class="form-control" />
+                                <div class="modal fade" id="modalmesan{{ $x->id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="card border-0 rounded-4">
+                                                    <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4"
+                                                        alt="..." />
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ $x->name_menu }}</h5>
+                                                        <p class="card-text text-danger">Rp. {{ $x->price }}</p>
+                                                        <div class="row mb-3">
+                                                            <div class="col-3 my-auto">
+                                                                <p class="my-auto">Qty</p>
+                                                            </div>
+                                                            <div class="col-1 my-auto">
+                                                                <p class="my-auto">:</p>
+                                                            </div>
+                                                            <div class="col">
+                                                                <input type="number" min="1" name="qty"
+                                                                    id="qty{{ $x->id }}" value="1"
+                                                                    class="form-control" />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Batal</button>
-                                            <button type="button" class="btn btn-primary"
-                                                id="button_menu{{ $x->id }}" data-bs-dismiss="modal">Pesan</button>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Batal</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    id="button_menu{{ $x->id }}"
+                                                    data-bs-dismiss="modal">Pesan</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
+                    @endforeach
                 </div>
             </section>
             <section id="pesanan" class="sticky-bottom bg-white overflow-hidden">
@@ -142,106 +105,25 @@
             <!-- Menu -->
             <section id="menu">
                 <div class="container-fluid px-5">
-                    <div class="row">
-                        <div class="col-lg-12 px-3 py-2 bg-abu">
-                            <h3 class="my-0">Soto Sate</h3>
-                        </div>
-                        <div class="col-lg-3 py-4">
-                            <div class="card border-0 rounded-4">
-                                <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title">Nasi Sate</h5>
-                                    <a href="#" class="stretched-link"></a>
-                                    <p class="card-text text-danger">Rp. 12.000</p>
-                                </div>
+                    @foreach ($category as $key => $p)
+                        <div class="row">
+                            <div class="col-lg-12 px-3 py-2 bg-abu">
+                                <h3 class="my-0">{{ $p->name_category }}</h3>
                             </div>
-                        </div>
-                        <div class="col-lg-3 py-4">
-                            <div class="card border-0 rounded-4">
-                                <img src="./assets/img/menu2.jpg" class="card-img-top rounded-4" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title">Nasi Sate</h5>
-                                    <a href="#" class="stretched-link"></a>
-                                    <p class="card-text text-danger">Rp. 12.000</p>
+                            @foreach ($p->getMenu as $x)
+                                <div class="col-lg-3 py-4">
+                                    <div class="card border-0 rounded-4">
+                                        <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $x->name_menu }}</h5>
+                                            <a href="{{ route('login.view') }}" class="stretched-link"></a>
+                                            <p class="card-text text-danger">Rp. {{ $x->price }}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
-                        <div class="col-lg-3 py-4">
-                            <div class="card border-0 rounded-4">
-                                <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title">Nasi Sate</h5>
-                                    <a href="#" class="stretched-link"></a>
-                                    <p class="card-text text-danger">Rp. 12.000</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12 px-3 py-2 bg-abu">
-                            <h3 class="my-0">Kuliner Mandura Nyaman Oggu</h3>
-                        </div>
-                        <div class="col-lg-3 py-4">
-                            <div class="card border-0 rounded-4">
-                                <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title">Nasi Sate</h5>
-                                    <a href="#" class="stretched-link"></a>
-                                    <p class="card-text text-danger">Rp. 12.000</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 py-4">
-                            <div class="card border-0 rounded-4">
-                                <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title">Nasi Sate</h5>
-                                    <a href="#" class="stretched-link"></a>
-                                    <p class="card-text text-danger">Rp. 12.000</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 py-4">
-                            <div class="card border-0 rounded-4">
-                                <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title">Nasi Sate</h5>
-                                    <a href="#" class="stretched-link"></a>
-                                    <p class="card-text text-danger">Rp. 12.000</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 py-4">
-                            <div class="card border-0 rounded-4">
-                                <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title">Nasi Sate</h5>
-                                    <a href="#" class="stretched-link"></a>
-                                    <p class="card-text text-danger">Rp. 12.000</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 py-4">
-                            <div class="card border-0 rounded-4">
-                                <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title">Nasi Sate</h5>
-                                    <a href="#" class="stretched-link"></a>
-                                    <p class="card-text text-danger">Rp. 12.000</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 py-4">
-                            <div class="card border-0 rounded-4">
-                                <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
-                                <div class="card-body">
-                                    <h5 class="card-title">Nasi Sate</h5>
-                                    <a href="#" class="stretched-link"></a>
-                                    <p class="card-text text-danger">Rp. 12.000</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </section>
         @endif

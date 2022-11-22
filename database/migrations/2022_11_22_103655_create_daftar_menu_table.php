@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('daftar_menu', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_category')->constrained('category')->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->string('name_menu');
             $table->integer('price');
             $table->timestamps();
