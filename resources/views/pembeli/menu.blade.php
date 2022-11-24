@@ -107,17 +107,21 @@
             </section>
             <section id="pesanan" class="sticky-bottom bg-white overflow-hidden">
                 <div class="container-fluid px-0">
-                    <div class="row justify-content-between my-auto">
-                        <div class="col my-auto d-flex">
-                            <input type="text" class="text-danger pe-2 pb-0 fw-bold border-0 w-25 h4 text-end"
-                                id="inc" value="0">
-                            <h4>Pesanan</h4></input>
+                    <form action="{{ route('pemesanan.process') }}" method="POST">
+                        @csrf
+                        <div class="row justify-content-between my-auto">
+                            <div class="col my-auto d-flex">
+                                <input type="text" class="text-danger pe-2 pb-0 fw-bold border-0 w-25 h4 text-end"
+                                    id="inc" value="0">
+                                <h4>Pesanan</h4></input>
+                            </div>
+                            <div class="col text-end">
+                                <button type="submit" id="button_pesan_sekarang"
+                                    class="btn btn-danger rounded-0 py-3">Pesan
+                                    Sekarang</button>
+                            </div>
                         </div>
-                        <div class="col text-end">
-                            <button type="button" id="button_pesan_sekarang" class="btn btn-danger rounded-0 py-3">Pesan
-                                Sekarang</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </section>
         @else
@@ -132,7 +136,8 @@
                             @foreach ($p->getMenu($search) as $x)
                                 <div class="col-lg-3 py-4">
                                     <div class="card border-0 rounded-4">
-                                        <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
+                                        <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4"
+                                            alt="..." />
                                         <div class="card-body">
                                             <h5 class="card-title">{{ $x->name_menu }}</h5>
                                             <a href="{{ route('login.view') }}" class="stretched-link"></a>
@@ -206,27 +211,5 @@
                 })
             })
         @endforeach
-        $("#button_pesan_sekarang").click(function() {
-            $.ajax({
-                type: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ route('pemesanan.process') }}",
-                data: {
-                    objectPemesanan: null,
-                },
-                success: function(data) {
-                    if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500)) {} else {
-                        if (data.error500) {
-                            if (alert('maaf terjadi kesalah pada server')) {} else window
-                                .location.reload();
-                        } else {
-                            printErrorMsg(data.error);
-                        }
-                    }
-                }
-            })
-        });
     </script>
 @endsection

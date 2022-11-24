@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DetailPesananController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProfileController;
@@ -38,4 +39,8 @@ Route::prefix('/')->group(function () {
     Route::post('pemesanan-process', [MenuController::class, 'pemesananProcess'])->name('pemesanan.process');
     Route::post('pemesanan-session', [MenuController::class, 'pemesananSession'])->name('pemesanan.session');
     Route::get('search', [MenuController::class, 'searchView'])->name('search.view');
+
+    Route::get('detail-pesanan', [DetailPesananController::class, 'detailPesananView'])->name('detail.pesanan.view')->middleware('pembeli');
+
+    // https://www.figma.com/file/iqGXLhny8ZVCKlcG8AzAev/Rancangan-Antarmuka?node-id=17%3A238
 });

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CategoryModel;
 use App\Models\DaftarMenuModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Crypt;
 
 class MenuController extends Controller
 {
@@ -24,13 +24,21 @@ class MenuController extends Controller
 
     public function pemesananProcess(Request $request)
     {
+        if (!$request->session()->get('pemesanan')) {
+            return redirect()->back()->with('info', 'masukan pesanan terlebih dahulu');
+        }
         $pemesanan = $request->session()->get('pemesanan');
         $product =  DaftarMenuModel::where(function ($query) use ($pemesanan) {
             foreach ($pemesanan as $key => $x) {
                 $query->orWhere('id', substr($key, 3));
             }
         })->get();
-        return response()->json(['data' => $pemesanan]);
+        foreach ($product as $key => $x) {
+            $idMenu[] = $x->id;
+        };
+        $implodeMenu = implode(" ", $idMenu);
+        $encyrptImplodeMenu = Crypt::encryptString($implodeMenu);
+        return redirect()->route('detail.pesanan.view', ['state' => $encyrptImplodeMenu]);
     }
     public function pemesananSession(Request $request)
     {
