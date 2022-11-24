@@ -61,7 +61,8 @@
                                                             alt="..." />
                                                         <div class="card-body">
                                                             <h5 class="card-title">{{ $x->name_menu }}</h5>
-                                                            <p class="card-text text-danger">Rp. {{ $x->price }}</p>
+                                                            <p class="card-text text-danger">Rp. {{ $x->price }}
+                                                            </p>
                                                             <div class="row mb-3">
                                                                 <div class="col-3 my-auto">
                                                                     <p class="my-auto">Qty</p>
@@ -70,9 +71,16 @@
                                                                     <p class="my-auto">:</p>
                                                                 </div>
                                                                 <div class="col">
-                                                                    <input type="number" min="1" name="qty"
-                                                                        id="qty{{ $x->id }}" value="1"
-                                                                        class="form-control" />
+                                                                    @if (session('pemesanan'))
+                                                                        <input type="number" min="1" name="qty"
+                                                                            id="qty{{ $x->id }}"
+                                                                            @foreach (session('pemesanan') as $key => $s) @if ($key == 'qty' . $x->id) value={{ $s }} @else value="1" @endif @endforeach
+                                                                            class="form-control" />
+                                                                    @else
+                                                                        <input type="number" min="1" name="qty"
+                                                                            id="qty{{ $x->id }}" value="1"
+                                                                            class="form-control" />
+                                                                    @endif
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -121,7 +129,7 @@
                             <div class="col-lg-12 px-3 py-2 bg-abu">
                                 <h3 class="my-0">{{ $p->name_category }}</h3>
                             </div>
-                            @foreach ($p->getMenu as $x)
+                            @foreach ($p->getMenu($search) as $x)
                                 <div class="col-lg-3 py-4">
                                     <div class="card border-0 rounded-4">
                                         <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4" alt="..." />
@@ -145,23 +153,57 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        let objectPemesanan = {};
+        @if (Session::get('pemesanan'))
+            let sum = 0;
+            @foreach (session('pemesanan') as $x)
+                sum += parseInt("{{ $x }}");
+            @endforeach
+            document.getElementById("inc").value = sum;
+        @endif
         @foreach ($menu as $x)
             $("#button_menu{{ $x->id }}").click(function() {
-                Swal.fire({
-                    icon: "success",
-                    text: "Pesanan Berhasil Dimasukan",
-                    showConfirmButton: false,
-                    timer: 1500,
-                });
-                objectPemesanan['qty{{ $x->id }}'] = $("#qty{{ $x->id }}").val();
-                let sum = 0;
-                for (var name in objectPemesanan) {
-                    let intege = parseInt(objectPemesanan[name]);
-                    sum += intege;
-                }
-                document.getElementById("inc").value = sum;
-
+                let qty = 'qty{{ $x->id }}';
+                let valQty = $("#qty{{ $x->id }}").val();
+                $.ajax({
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ route('pemesanan.session') }}",
+                    data: {
+                        qty: qty,
+                        valQty: valQty,
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500)) {
+                            Swal.fire({
+                                icon: "success",
+                                text: "Pesanan Berhasil Dimasukan",
+                                showConfirmButton: false,
+                                timer: 1500,
+                            });
+                            let sum = 0;
+                            for (var name in data.data) {
+                                let intege = parseInt(data.data[name]);
+                                sum += intege;
+                            }
+                            document.getElementById("inc").value = sum;
+                        } else {
+                            if (data.error500) {
+                                if (alert('maaf terjadi kesalah pada server')) {} else window
+                                    .location.reload();
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    text: data.error,
+                                    showConfirmButton: false,
+                                    timer: 1500,
+                                });
+                                printErrorMsg(data.error);
+                            }
+                        }
+                    }
+                })
             })
         @endforeach
         $("#button_pesan_sekarang").click(function() {
@@ -172,7 +214,7 @@
                 },
                 url: "{{ route('pemesanan.process') }}",
                 data: {
-                    objectPemesanan: objectPemesanan,
+                    objectPemesanan: null,
                 },
                 success: function(data) {
                     if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500)) {} else {

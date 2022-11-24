@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CategoryModel;
 use App\Models\DaftarMenuModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class MenuController extends Controller
 {
@@ -23,14 +24,34 @@ class MenuController extends Controller
 
     public function pemesananProcess(Request $request)
     {
-
-        $pemesanan = $request->objectPemesanan;
+        $pemesanan = $request->session()->get('pemesanan');
         $product =  DaftarMenuModel::where(function ($query) use ($pemesanan) {
             foreach ($pemesanan as $key => $x) {
                 $query->orWhere('id', substr($key, 3));
             }
         })->get();
-        return response()->json(['data' => $product]);
+        return response()->json(['data' => $pemesanan]);
+    }
+    public function pemesananSession(Request $request)
+    {
+        if ($request->valQty < 1) {
+            return response()->json(['error' => 'pemesanan harus lebih dari 1']);
+        }
+        try {
+            $obj = [];
+            $obj[$request->qty] = $request->valQty;
+            if ($request->session()->get('pemesanan')) {
+                $result = array_merge($request->session()->get('pemesanan'), $obj);
+                $request->session()->forget('pemesanan');
+                $request->session()->put('pemesanan', $result);
+            } else {
+                $request->session()->put('pemesanan', $obj);
+                $result = $request->session()->get('pemesanan');
+            }
+            return response()->json(['data' => $result]);
+        } catch (\Throwable $th) {
+            return response()->json(['error500' => 'terjadi kesalahan pada server']);
+        }
     }
 
     public function searchView()
