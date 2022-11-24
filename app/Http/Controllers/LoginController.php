@@ -29,7 +29,7 @@ class LoginController extends Controller
                 return redirect()->route('register.view')->with(['success' => 'selamat datang']);
             }
         }
-        return redirect()->route('login.view')->withInput($request->all())->with(['error' => 'nomor atau password salah']);
+        return redirect()->route('login.view')->withInput($request->all())->with(['errors' => 'nomor atau password salah']);
     }
 
     public function logout()

@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('penjual', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_penjual')->constrained('users')->onDelete('CASCADE')->onUpdate('CASCADE');
-            $table->string('nama');
-            $table->string('nama_warung');
-            $table->string('lokasi');
-            $table->string('nomer_telepon');
+            $table->string('nama')->nullable();
+            $table->string('nama_warung')->nullable();
+            $table->string('lokasi')->nullable();
+            $table->string('nomer_telepon')->nullable();
             $table->timestamps();
         });
     }

@@ -37,32 +37,22 @@
                             <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                         </ul>
                     </li>
-                @elseif($title == 'login')
+                @elseif($title == 'login' || $title == 'register')
                     <li class="nav-item my-2 mx-3 dropdown">
-                        <a class="nav-link bg-white rounded-pill text-dark px-3 text-center shadow-primary"
-                            href="{{ route('register.view') }}">
+                        <a class="nav-link dropdown-toggle bg-white rounded-pill text-dark px-3 text-center shadow-primary"
+                            href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="./assets/img/profile.svg" class="img-profile rounded-circle me-1"
                                 alt="" />
-                            Sign Up
+                            Register / Login
                         </a>
-                    </li>
-                @elseif($title == 'register')
-                    <li class="nav-item my-2 mx-3 dropdown">
-                        <a class="nav-link bg-white rounded-pill text-dark px-3 text-center shadow-primary"
-                            href="{{ route('login.view') }}">
-                            <img src="./assets/img/profile.svg" class="img-profile rounded-circle me-1"
-                                alt="" />
-                            Sign In
-                        </a>
-                    </li>
-                @else
-                    <li class="nav-item my-2 mx-3 dropdown">
-                        <a class="nav-link bg-white rounded-pill text-dark px-3 text-center shadow-primary"
-                            href="{{ route('login.view') }}">
-                            <img src="./assets/img/profile.svg" class="img-profile rounded-circle me-1"
-                                alt="" />
-                            Sign In
-                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('register.penjual.view') }}">Register Sebagai
+                                    Penjual</a>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('register.pembeli.view') }}">Register Sebagai
+                                    Pembeli</a></li>
+                            <li><a class="dropdown-item" href="{{ route('login.view') }}">Login</a></li>
+                        </ul>
                     </li>
                 @endif
             </ul>

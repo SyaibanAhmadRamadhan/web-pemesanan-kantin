@@ -12,7 +12,7 @@
                     <div class="col-lg-9 py-5" style="background-color: #f4f4f4">
                         <div class="row">
                             <div class="col text-center">
-                                <h2>Sign Up</h2>
+                                <h2>Register Penjual</h2>
                             </div>
                         </div>
                         <div class="row justify-content-center pt-5">
@@ -21,7 +21,12 @@
                                 <form action="{{ route('register.process') }}" method="POST">
                                     @csrf
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Ussername</label>
+                                        <label for="exampleInputEmail1" class="form-label">Nama Warung</label>
+                                        <input type="text" id="nama_warung" name="nama_warung" class="form-control" />
+                                        <span class="text-danger error-text nama_warung_err"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Username</label>
                                         <input type="text" id="username" name="username" class="form-control" />
                                         <span class="text-danger error-text username_err"></span>
                                     </div>
@@ -42,11 +47,8 @@
                                         <span class="text-danger error-text password_confirmation_err"></span>
                                     </div>
                                     <div id="button" class="d-grid gap-2 d-md-block pt-3 text-center">
-                                        <p id="text_daftar">Daftar Sebagai :</p>
                                         <button class="btn btn-auth1 px-5 py-2 mx-4" id="button_penjual"
-                                            type="button">Penjual</button>
-                                        <button class="btn btn-auth1 px-5 py-2 mx-4" id="button_pembeli"
-                                            type="button">Pembeli</button>
+                                            type="button">Daftar</button>
                                     </div>
                                 </form>
                             </div>
@@ -65,6 +67,7 @@
             let username = $("#username").val();
             let email = $("#email").val();
             let password = $("#password").val();
+            let nama_warung = $("#nama_warung").val();
             let confirm_password = $("#confirm_password").val();
             let role = 'penjual';
             $.ajax({
@@ -78,54 +81,15 @@
                     email: email,
                     password: password,
                     password_confirmation: confirm_password,
-                    role: role
+                    role: role,
+                    nama_warung: nama_warung,
                 },
                 success: function(data) {
                     if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500)) {
                         $('.username_err').text('');
                         $('.email_err').text('');
                         $('.password_err').text('');
-                        $('.password_confirmation_err').text('');
-                        $("#success").css('display', 'block');
-                        $("#success").append(
-                            `<div>pendaftaran berhasil <a href="{{ route('login.view') }}">klik disni untuk login</a></div>`
-                        );
-                        $("#button").remove();
-                    } else {
-                        if (data.error500) {
-                            if (alert('maaf terjadi kesalah pada server')) {} else window
-                                .location.reload();
-                        } else {
-                            printErrorMsg(data.error);
-                        }
-                    }
-                }
-            })
-        })
-        $("#button_pembeli").click(function() {
-            let username = $("#username").val();
-            let email = $("#email").val();
-            let password = $("#password").val();
-            let confirm_password = $("#confirm_password").val();
-            let role = 'pembeli';
-            $.ajax({
-                type: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: "{{ route('register.process') }}",
-                data: {
-                    username: username,
-                    email: email,
-                    password: password,
-                    password_confirmation: confirm_password,
-                    role: role
-                },
-                success: function(data) {
-                    if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500)) {
-                        $('.username_err').text('');
-                        $('.email_err').text('');
-                        $('.password_err').text('');
+                        $('.nama_warung_err').text('');
                         $('.password_confirmation_err').text('');
                         $("#success").css('display', 'block');
                         $("#success").append(
@@ -151,6 +115,9 @@
                 }
                 if (!msg.email) {
                     $('.email_err').text('');
+                }
+                if (!msg.nama_warung) {
+                    $('.nama_warung_err').text('');
                 }
                 if (!msg.password) {
                     $('.password_err').text('');

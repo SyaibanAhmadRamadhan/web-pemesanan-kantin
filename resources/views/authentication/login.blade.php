@@ -14,9 +14,9 @@
                         </div>
                         <div class="row justify-content-center pt-5">
                             <div class="col-lg-10">
-                                @if (session('error'))
+                                @if (session('errors'))
                                     <div class="alert alert-danger" role="alert" id="allert">
-                                        {{ session('error') }}
+                                        {{ session('errors') }}
                                     </div>
                                 @endif
                                 <form action="{{ route('login.process') }}" method="POST">
