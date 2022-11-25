@@ -1,9 +1,9 @@
-@extends('layout.main')
+@extends('layout.main-pembeli')
 
 @section('container')
     <section id="container">
         <!-- Navbar -->
-        @include('partials.navbar')
+        @include('partials.navbar-pembeli')
         <!-- Navbar Akhir -->
         @if ($urlStatus == true)
             <section id="dpesanan">

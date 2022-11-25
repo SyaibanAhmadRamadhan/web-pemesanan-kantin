@@ -25,8 +25,7 @@ Route::get('/', function () {
 Route::prefix('/')->group(function () {
     Route::get('/', [MenuController::class, 'menuView'])->name('menu.view');
 
-    Route::get('register-pembeli', [RegisterController::class, 'registerPembeliView'])->name('register.pembeli.view')->middleware('guest');
-    Route::get('register-penjual', [RegisterController::class, 'registerPenjualView'])->name('register.penjual.view')->middleware('guest');
+    Route::get('register', [RegisterController::class, 'registerView'])->name('register.view')->middleware('guest');
     Route::post('register-process', [RegisterController::class, 'registerProcess'])->name('register.process');
 
     Route::get('login', [LoginController::class, 'loginView'])->name('login.view')->middleware('guest');

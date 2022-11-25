@@ -1,7 +1,7 @@
-@extends('layout.main')
+@extends('layout.main-pembeli')
 @section('container')
     <section id="container">
-        @include('partials.navbar')
+        @include('partials.navbar-pembeli')
         <!-- auth -->
         <section id="auth">
             <div class="container my-5">
