@@ -3,6 +3,9 @@
 use App\Http\Controllers\DetailPesananController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\PenjualDashboardController;
+use App\Http\Controllers\PenjualMenuController;
+use App\Http\Controllers\PenjualProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
@@ -18,29 +21,49 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::prefix('/')->group(function () {
     Route::get('/', [MenuController::class, 'menuView'])->name('menu.view');
 
+    // authentication
     Route::get('register', [RegisterController::class, 'registerView'])->name('register.view')->middleware('guest');
     Route::post('register-process', [RegisterController::class, 'registerProcess'])->name('register.process');
-
     Route::get('login', [LoginController::class, 'loginView'])->name('login.view')->middleware('guest');
     Route::post('login-process', [LoginController::class, 'loginProcess'])->name('login.process');
-
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+    // end athentication
 
+    // profile pembeli
     Route::get('profile', [ProfileController::class, 'profileView'])->name('profile.view')->middleware('pembeli');
     Route::put('profile-process', [ProfileController::class, 'profileEditProcess'])->name('profile.edit.proccess')->middleware('pembeli');
+    // end profile pembeli
 
+    // pemesanan
     Route::post('pemesanan-process', [MenuController::class, 'pemesananProcess'])->name('pemesanan.process');
     Route::post('pemesanan-session', [MenuController::class, 'pemesananSession'])->name('pemesanan.session');
+    // end pemesanan
+
+    // search
     Route::get('search', [MenuController::class, 'searchView'])->name('search.view');
+    // end search
 
+    // detail-pesanan
     Route::get('detail-pesanan', [DetailPesananController::class, 'detailPesananView'])->name('detail.pesanan.view')->middleware('pembeli');
+    // end detail-pesanan
+});
 
-    // https://www.figma.com/file/iqGXLhny8ZVCKlcG8AzAev/Rancangan-Antarmuka?node-id=17%3A238
+Route::prefix('/penjual')->group(function () {
+    // dashboard
+    Route::get('dashboard', [PenjualDashboardController::class, 'dashboardView'])->name('dashboard.view');
+    // end dasboard
+
+    // input data penjual
+    Route::get('input-data-penjual', [PenjualProfileController::class, 'inputDataPenjual'])->name('input.data.penjual.view');
+    Route::post('input-data-penjual-process', [PenjualProfileController::class, 'inputDataPenjualProccess'])->name('input.data.penjual.process');
+    // end input data penjual
+
+    // menu
+    Route::get('tambah-menu', [PenjualMenuController::class, 'addMenuView'])->name('menu.add.view');
+    Route::get('data-menu', [PenjualMenuController::class, 'dataMenuView'])->name('menu.data.view');
+    Route::get('edit-menu', [PenjualMenuController::class, 'editMenuView'])->name('menu.edit.view');
+    // end menu
 });

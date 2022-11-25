@@ -22,13 +22,13 @@
                                 <form action="{{ route('login.process') }}" method="POST">
                                     @csrf
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Ussername</label>
-                                        <input type="text" name="username" value="{{ old('username') }}"
+                                        <label for="username" class="form-label">Username</label>
+                                        <input type="text" name="username" id="username" value="{{ old('username') }}"
                                             class="form-control" />
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Password</label>
-                                        <input type="password" name="password" value="{{ old('password') }}"
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" name="password" id="password" value="{{ old('password') }}"
                                             class="form-control" />
                                     </div>
                                     <div class="text-center">

@@ -21,22 +21,22 @@
                                 <form action="{{ route('register.process') }}" method="POST">
                                     @csrf
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Ussername</label>
+                                        <label for="username" class="form-label">Username</label>
                                         <input type="text" id="username" name="username" class="form-control" />
                                         <span class="text-danger error-text username_err"></span>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputEmail1" class="form-label">Email</label>
+                                        <label for="email" class="form-label">Email</label>
                                         <input type="text" id="email" name="email" class="form-control" />
                                         <span class="text-danger error-text email_err"></span>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                        <label for="password" class="form-label">Password</label>
                                         <input type="password" id="password" name="password" class="form-control" />
                                         <span class="text-danger error-text password_err"></span>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Konfirmasi Password</label>
+                                        <label for="confirm_password" class="form-label">Konfirmasi Password</label>
                                         <input type="password" id="confirm_password" name="confirm_password"
                                             class="form-control" />
                                         <span class="text-danger error-text password_confirmation_err"></span>
