@@ -131,28 +131,35 @@
             <!-- Menu -->
             <section id="menu">
                 <div class="container-fluid px-5">
-                    @foreach ($penjual as $key => $p)
-                        <div class="row">
-                            @if (count($p->getMenu($search)) > 0)
-                                <div class="col-lg-12 px-3 py-2 bg-abu">
-                                    <h3 class="my-0">{{ $p->nama_warung }}</h3>
-                                </div>
-                            @endif
-                            @foreach ($p->getMenu($search) as $x)
-                                <div class="col-lg-3 py-4">
-                                    <div class="card border-0 rounded-4">
-                                        <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4"
-                                            alt="..." />
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ $x->name_menu }}</h5>
-                                            <a href="{{ route('login.view') }}" class="stretched-link"></a>
-                                            <p class="card-text text-danger">Rp. {{ $x->price }}</p>
+                    @if (count($penjual) == 0)
+                        <p style="text-align: center">menu tidak tersedia</p>
+                    @else
+                        @foreach ($penjual as $key => $p)
+                            <div class="row">
+                                @if (count($p->getMenu($search)) > 0)
+                                    <div class="col-lg-12 px-3 py-2 bg-abu">
+                                        <h3 class="my-0">{{ $p->nama_warung }}</h3>
+                                    </div>
+                                @endif
+                                @foreach ($p->getMenu($search) as $x)
+                                    <div class="col-lg-3 py-4">
+                                        <div class="card border-0 rounded-4">
+                                            <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4"
+                                                alt="..." />
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $x->name_menu }}</h5>
+                                                <a href="{{ route('login.view') }}" class="stretched-link"></a>
+                                                <p class="card-text text-danger">Rp. {{ $x->price }}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endforeach
+                                    @if (count($p->getMenu($search)) == 0)
+                                        <p style="text-align: center">menu tidak tersedia</p>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </section>
         @endif
