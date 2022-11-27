@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class Penjualan
+class InputDataPenjual
 {
     /**
      * Handle an incoming request.
@@ -20,10 +20,12 @@ class Penjualan
     {
         if (Auth::check() && Auth::user()->role == 'penjual') {
             if (PenjualModel::where('id_penjual', Auth::user()->id)->first()) {
-                return $next($request);
+                abort(404);
             } else {
-                return redirect()->route('input.data.penjual.view')->with('info', 'silahkan isi data anda terlebih dahulu');
+                return $next($request);
             }
+        } else {
+            abort(404);
         }
         return redirect('');
     }

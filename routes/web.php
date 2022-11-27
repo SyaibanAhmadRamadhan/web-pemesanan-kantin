@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('/')->group(function () {
-    Route::get('/', [MenuController::class, 'menuView'])->name('menu.view');
+    Route::get('/', [MenuController::class, 'menuView'])->name('menu.view')->middleware('withoutpenjual');
 
     // authentication
     Route::get('register', [RegisterController::class, 'registerView'])->name('register.view')->middleware('guest');
@@ -53,17 +53,17 @@ Route::prefix('/')->group(function () {
 
 Route::prefix('/penjual')->group(function () {
     // dashboard
-    Route::get('dashboard', [PenjualDashboardController::class, 'dashboardView'])->name('dashboard.view');
+    Route::get('dashboard', [PenjualDashboardController::class, 'dashboardView'])->name('dashboard.view')->middleware('penjual');
     // end dasboard
 
     // input data penjual
-    Route::get('input-data-penjual', [PenjualProfileController::class, 'inputDataPenjual'])->name('input.data.penjual.view');
-    Route::post('input-data-penjual-process', [PenjualProfileController::class, 'inputDataPenjualProccess'])->name('input.data.penjual.process');
+    Route::get('input-data-penjual', [PenjualProfileController::class, 'inputDataPenjual'])->name('input.data.penjual.view')->middleware('inputdatapenjual');
+    Route::post('input-data-penjual-process', [PenjualProfileController::class, 'inputDataPenjualProccess'])->name('input.data.penjual.process')->middleware('inputdatapenjual');
     // end input data penjual
 
     // menu
-    Route::get('tambah-menu', [PenjualMenuController::class, 'addMenuView'])->name('menu.add.view');
-    Route::get('data-menu', [PenjualMenuController::class, 'dataMenuView'])->name('menu.data.view');
-    Route::get('edit-menu', [PenjualMenuController::class, 'editMenuView'])->name('menu.edit.view');
+    Route::get('tambah-menu', [PenjualMenuController::class, 'addMenuView'])->name('menu.add.view')->middleware('penjual');
+    Route::get('data-menu', [PenjualMenuController::class, 'dataMenuView'])->name('menu.data.view')->middleware('penjual');
+    Route::get('edit-menu', [PenjualMenuController::class, 'editMenuView'])->name('menu.edit.view')->middleware('penjual');
     // end menu
 });

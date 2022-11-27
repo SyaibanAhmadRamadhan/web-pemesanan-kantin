@@ -5,7 +5,7 @@
         </div>
     </a>
     <hr class="sidebar-divider my-0">
-    <li class="nav-item active">
+    <li class="nav-item @if ($title == 'dashboard') active @endif">
         <a class="nav-link" href="{{ route('dashboard.view') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
@@ -14,17 +14,20 @@
     <div class="sidebar-heading">
         Features
     </div>
-    <li class="nav-item">
+    <li class="nav-item @if ($title == 'data-menu' || $title == 'tambah-menu') active @endif">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
             aria-expanded="true" aria-controls="collapseBootstrap">
             <i class="far fa-fw fa-window-maximize"></i>
-            <span>Product</span>
+            <span>Menu</span>
         </a>
-        <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+        <div id="collapseBootstrap" class="collapse @if ($title == 'data-menu' || $title == 'tambah-menu') show @endif"
+            aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Product</h6>
-                <a class="collapse-item" href="{{ route('menu.data.view') }}">Data Product</a>
-                <a class="collapse-item" href="{{ route('menu.add.view') }}">Tambah Product</a>
+                <h6 class="collapse-header">Menu</h6>
+                <a class="collapse-item @if ($title == 'data-menu') active @endif"
+                    href="{{ route('menu.data.view') }}">Data Menu</a>
+                <a class="collapse-item @if ($title == 'tambah-menu') active @endif"
+                    href="{{ route('menu.add.view') }}">Tambah Menu</a>
             </div>
         </div>
     </li>

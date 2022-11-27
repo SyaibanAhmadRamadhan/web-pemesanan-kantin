@@ -26,7 +26,7 @@ class LoginController extends Controller
                 return redirect('/')->with(['success' => 'selamat datang']);
             } elseif (Auth()->user()->role == 'penjual') {
                 $request->session()->regenerate();
-                return redirect()->route('register.view')->with(['success' => 'selamat datang']);
+                return redirect()->route('dashboard.view');
             }
         }
         return redirect()->route('login.view')->withInput($request->all())->with(['errors' => 'nomor atau password salah']);
