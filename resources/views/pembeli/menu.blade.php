@@ -28,14 +28,16 @@
         @if (Auth()->user())
             <section id="menu">
                 <div class="container-fluid px-5">
-                    @if (count($category) == 0)
+                    @if (count($penjual) == 0)
                         <p style="text-align: center">menu tidak tersedia</p>
                     @else
-                        @foreach ($category as $key => $p)
+                        @foreach ($penjual as $key => $p)
                             <div class="row">
-                                <div class="col-lg-12 px-3 py-2 bg-abu">
-                                    <h3 class="my-0">{{ $p->name_category }}</h3>
-                                </div>
+                                @if (count($p->getMenu($search)) > 0)
+                                    <div class="col-lg-12 px-3 py-2 bg-abu">
+                                        <h3 class="my-0">{{ $p->nama_warung }}</h3>
+                                    </div>
+                                @endif
                                 @foreach ($p->getMenu($search) as $x)
                                     <div class="col-lg-3 py-4">
                                         <div class="card border-0 rounded-4">
@@ -74,7 +76,7 @@
                                                                     @if (session('pemesanan'))
                                                                         <input type="number" min="1" name="qty"
                                                                             id="qty{{ $x->id }}"
-                                                                            @foreach (session('pemesanan') as $key => $s) @if ($key == 'qty' . $x->id) value={{ $s }} @else value="1" @endif @endforeach
+                                                                            @foreach (session('pemesanan') as $key => $s) @if (substr($key, 3) == $x->id) value="{{ $s }}" @break @endif @endforeach
                                                                             class="form-control" />
                                                                     @else
                                                                         <input type="number" min="1" name="qty"
@@ -105,7 +107,8 @@
                     @endif
                 </div>
             </section>
-            <section id="pesanan" class="sticky-bottom bg-white overflow-hidden">
+            <section id="pesanan"
+                class="@if (count($penjual) == 0) fixed-bottom @else sticky-bottom @endif bg-white overflow-hidden">
                 <div class="container-fluid px-0">
                     <form action="{{ route('pemesanan.process') }}" method="POST">
                         @csrf
@@ -128,11 +131,13 @@
             <!-- Menu -->
             <section id="menu">
                 <div class="container-fluid px-5">
-                    @foreach ($category as $key => $p)
+                    @foreach ($penjual as $key => $p)
                         <div class="row">
-                            <div class="col-lg-12 px-3 py-2 bg-abu">
-                                <h3 class="my-0">{{ $p->name_category }}</h3>
-                            </div>
+                            @if (count($p->getMenu($search)) > 0)
+                                <div class="col-lg-12 px-3 py-2 bg-abu">
+                                    <h3 class="my-0">{{ $p->nama_warung }}</h3>
+                                </div>
+                            @endif
                             @foreach ($p->getMenu($search) as $x)
                                 <div class="col-lg-3 py-4">
                                     <div class="card border-0 rounded-4">

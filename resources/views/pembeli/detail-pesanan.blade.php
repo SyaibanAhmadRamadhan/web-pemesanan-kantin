@@ -19,47 +19,106 @@
                                 <div class="col-lg">
                                     <p class="text-secondary">Pemesanan</p>
                                     <p class="my-0">{{ Auth()->user()->username }}</p>
-                                    <p class="my-0">08128192798</p>
+                                    <p class="my-0">
+                                        @if ($pembeli)
+                                            {{ $pembeli->mobile_phone }}
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                             <div class="row my-3 px-3 py-4 bg-white">
-                                <div class="col-lg-12">
-                                    <h5>Soto Sate</h5>
-                                </div>
-                                <div class="col-lg">
-                                    @foreach ($pesanan as $key => $x)
-                                        <div class="d-flex border-bottom border-2 py-4">
-                                            <img src="./assets/img/menu2.jpg" width="110" alt="" />
-                                            <div class="mt-auto ps-3">
-                                                <p class="mt-0">{{ $x->name_menu }}</p>
-                                                <div class="row mb-3">
-                                                    <div class="col-3 my-auto">
-                                                        <p class="my-auto">Qty</p>
+                                @php
+                                    $subTotal = 0;
+                                @endphp
+                                @foreach ($pesanan as $key => $p)
+                                    <div class="col-lg-12">
+                                        <br>
+                                        <h5>{{ $p->nama_warung }}</h5>
+                                    </div>
+                                    <div class="col-lg">
+                                        @foreach ($p->getMenu($search) as $x)
+                                            @foreach ($sessionPemesanan as $key => $z)
+                                                @if (substr($key, 3) == $x->id)
+                                                    <div class="d-flex border-bottom border-2 py-4">
+                                                        <img src="{{ asset('menu/' . $x->picture) }}" width="110"
+                                                            alt="" />
+                                                        <div class="mt-auto ps-3">
+                                                            <p class="mt-0">{{ $x->name_menu }}</p>
+                                                            <p class="text-danger mb-0">@rupiah($x->price)</p>
+                                                            <div class="row mb-3">
+                                                                <div class="col-3 my-auto">
+                                                                    <p class="my-auto">Qty</p>
+                                                                </div>
+                                                                <div class="col-1 my-auto">
+                                                                    <p class="my-auto">:</p>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <input id="qty{{ $x->id }}" type="number"
+                                                                        min="1" name="qty"
+                                                                        value="{{ $z }}" class="form-control" />
+                                                                </div>
+                                                            </div>
+                                                            {{-- <p class="text-danger mb-0">1x</p> --}}
+                                                        </div>
+                                                        <div class="text-end w-100 mt-auto mb-0">
+                                                            <p id="totalMenu{{ $x->id }}">
+                                                                @php
+                                                                    $total = $x->price * $z;
+                                                                @endphp
+                                                                @rupiah($total)
+                                                            </p>
+                                                            <a href="#" class="btn btn-sm btn-danger"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#hapusModal{{ $x->id }}">Hapus</a>
+                                                            <div class="modal fade" id="hapusModal{{ $x->id }}"
+                                                                tabindex="-1" role="dialog"
+                                                                aria-labelledby="exampleModalLabelLogout"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <p>Anda Ingin Menghapus Menu
+                                                                                '{{ $x->name_menu }}'?</p>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-outline-primary"
+                                                                                data-bs-dismiss="modal">Cancel</button>
+                                                                            <form
+                                                                                action="{{ route('pemesanan.delete.process', ['id' => $x->id]) }}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="btn btn-danger">Hapus</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-1 my-auto">
-                                                        <p class="my-auto">:</p>
-                                                    </div>
-                                                    <div class="col">
-                                                        <input type="number" min="1" name="qty" value="1"
-                                                            class="form-control" />
-                                                    </div>
-                                                </div>
-                                                <p class="text-danger mb-0">1x</p>
-                                            </div>
-                                            <div class="text-end w-100 mt-auto mb-0">
-                                                <p>Rp.13.000</p>
-                                                <a href="#!" class="btn btn-danger">hapus</a>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
+                                                @endif
+                                            @endforeach
+
+                                            @foreach ($sessionPemesanan as $key => $z)
+                                                @if (substr($key, 3) == $x->id)
+                                                    @php
+                                                        $total = $x->price * $z;
+                                                        $subTotal += $x->price * $z;
+                                                    @endphp
+                                                @endif
+                                            @endforeach
+                                        @endforeach
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                         <div class="col-lg mx-auto dtotal">
                             <div class="my-3 px-3 py-4 bg-white">
                                 <div class="d-flex border-bottom border-2 py-4">
                                     <h5 class="mb-0 w-100 fw-bold">Total Pesanan</h5>
-                                    <h5 class="text-end w-100 mb-0 text-danger">Rp.13.000</h5>
+                                    <h5 id="subTotal" class="text-end w-100 mb-0 text-danger">@rupiah($subTotal)</h5>
                                 </div>
                                 <div class="d-flex border-bottom border-2 py-4">
                                     <h5 class="mb-0 w-100 fw-bold">Metode Pembayaran</h5>
@@ -86,4 +145,46 @@
         @endif
 
     </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        @foreach (session('pemesanan') as $key => $x)
+            $("#qty{{ substr($key, 3) }}").on("keyup change", function() {
+                let qty = 'qty{{ substr($key, 3) }}';
+                let valQty = $("#qty{{ substr($key, 3) }}").val();
+                $.ajax({
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: "{{ route('pemesanan.update.session') }}",
+                    data: {
+                        qty: qty,
+                        valQty: valQty,
+                    },
+                    success: function(data) {
+                        if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500)) {
+                            const rupiah = (number) => {
+                                return new Intl.NumberFormat("id-ID", {
+                                    style: "currency",
+                                    currency: "IDR",
+                                    minimumFractionDigits: 0,
+                                }).format(number);
+                            }
+                            $("#totalMenu{{ substr($key, 3) }}").text(rupiah(data.total));
+                            $("#subTotal").text(rupiah(data.subTotal));
+                        } else {
+                            if (data.error500) {
+                                if (alert('maaf terjadi kesalah pada server')) {} else window
+                                    .location.reload();
+                            } else {
+                                if (alert('maaf terjadi kesalahan')) {} else window
+                                    .location.reload();
+                            }
+                        }
+                    }
+                })
+            })
+        @endforeach
+    </script>
 @endsection

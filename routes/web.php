@@ -48,6 +48,8 @@ Route::prefix('/')->group(function () {
 
     // detail-pesanan
     Route::get('detail-pesanan', [DetailPesananController::class, 'detailPesananView'])->name('detail.pesanan.view')->middleware('pembeli');
+    Route::post('pemesanan-update-session', [DetailPesananController::class, 'updatePemesananSession'])->name('pemesanan.update.session')->middleware('pembeli');
+    Route::delete('delete-pemesanan/{id}', [DetailPesananController::class, 'deletePemesananProcess'])->name('pemesanan.delete.process')->middleware('pembeli');
     // end detail-pesanan
 });
 

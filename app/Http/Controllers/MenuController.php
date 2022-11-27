@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategoryModel;
 use App\Models\DaftarMenuModel;
+use App\Models\PenjualModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -12,12 +12,12 @@ class MenuController extends Controller
     public function menuView()
     {
         $menu = DaftarMenuModel::all();
-        $category = CategoryModel::all();
+        $penjual = PenjualModel::all();
 
         return view('pembeli.menu', [
             'title' => 'menu',
             'menu' => $menu,
-            'category' => $category,
+            'penjual' => $penjual,
             'search' => null
         ]);
     }
@@ -40,6 +40,7 @@ class MenuController extends Controller
         $encyrptImplodeMenu = Crypt::encryptString($implodeMenu);
         return redirect()->route('detail.pesanan.view', ['state' => $encyrptImplodeMenu]);
     }
+
     public function pemesananSession(Request $request)
     {
         if ($request->valQty < 1) {
@@ -66,28 +67,28 @@ class MenuController extends Controller
     {
         if (isset($_GET['search'])) {
             $searchGet = $_GET['search'];
-            $DaftarMenu = DaftarMenuModel::distinct('id_category')->where('name_menu', 'LIKE', '%' . $_GET['search'] . '%')->get('id_category');
+            $DaftarMenu = DaftarMenuModel::distinct('id_penjual')->where('name_menu', 'LIKE', '%' . $_GET['search'] . '%')->get('id_penjual');
             if (count($DaftarMenu) != 0) {
-                $category = CategoryModel::where(function ($query) use ($DaftarMenu) {
+                $penjual = PenjualModel::where(function ($query) use ($DaftarMenu) {
                     foreach ($DaftarMenu as $key => $x) {
-                        $query->orWhere('id', $x->id_category);
+                        $query->orWhere('id_penjual', $x->id_penjual);
                     }
                 })->get();
                 $menu = DaftarMenuModel::where('name_menu', 'LIKE', '%' . $_GET['search'] . '%')->get();
             } else {
-                $category = [];
+                $penjual = [];
                 $menu =  [];
             }
         } else {
             $searchGet = null;
             $menu = [];
-            $category = [];
+            $penjual = [];
         }
 
         return view('pembeli.menu', [
             'title' => 'menu',
             'menu' => $menu,
-            'category' => $category,
+            'penjual' => $penjual,
             'search' => $searchGet
         ]);
     }
