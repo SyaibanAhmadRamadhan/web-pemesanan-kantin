@@ -13,6 +13,9 @@
                         <li class="nav-item my-2 mx-3">
                             <a class="nav-link active"> Input Data Penjual </a>
                         </li>
+                        <li class="nav-item my-2 mx-3">
+                            <a href="{{ route('logout') }}" class="nav-link active"> logout </a>
+                        </li>
                     </ul>
                 </div>
             </div>
