@@ -31,12 +31,14 @@
                                 <div class="form-group row">
                                     <label for="price" class="col-sm-3 col-form-label">Harga Menu</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="price" id="price"
-                                            placeholder="Ex : 200000" value="{{ old('price') }}">
+                                        <input type="hidden" name="price" id="price" value="{{ old('price') }}">
+                                        <input type="text" class="form-control" value="{{ old('price') }}"
+                                            name="priceShow" id="priceShow" placeholder="Ex : 200000">
                                         @error('price')
                                             <span style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>
+
                                 </div>
                                 <div class="form-group row">
                                     <label for="picture" class="col-sm-3 col-form-label">Gambar Menu</label>
@@ -64,20 +66,6 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        @if (old('picture'))
-            const imageShow = document.querySelector('.img-show');
-            const image = document.querySelector('#picture');
-            imageShow.style.display = 'block';
-            const oFReader = new FileReader();
-            oFReader.readAsDataURL(image.files[0]);
-            alert('r');
-            oFReader.onload = function(oFREvent) {
-                if (image.value) {
-                    imageShow.src = oFREvent.target.result;
-                }
-            }
-        @endif
-
         function previewImage() {
             const imageShow = document.querySelector('.img-show');
             const image = document.querySelector('#picture');
@@ -126,5 +114,45 @@
                 return true;
             }
         });
+    </script>
+
+    {{-- input rupiah --}}
+    <script type="text/javascript">
+        var rupiah = document.getElementById('priceShow');
+        rupiah.value = formatRupiah(rupiah.value, 'Rp. ');
+        rupiah.addEventListener('keyup', function(e) {
+            $("#price").val(formatRupiahEsc(this.value))
+            // tambahkan 'Rp.' pada saat form di ketik
+            // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+            rupiah.value = formatRupiah(this.value, 'Rp. ');
+        });
+
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+
+        function formatRupiahEsc(angka) {
+            let al = "";
+            if (angka == "" || angka == null || angka == "null" || angka == undefined) {
+                al = "";
+            } else {
+                al = Math.abs(angka.replace(/[^,\d]/g, '').toString());
+            }
+            return al;
+        }
     </script>
 @endsection

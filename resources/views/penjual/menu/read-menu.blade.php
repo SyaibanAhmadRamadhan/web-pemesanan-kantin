@@ -17,11 +17,13 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-12 mb-4">
-                            <!-- Simple Tables -->
-                            <div class="card">
-                                <div class="table-responsive">
-                                    <table class="table align-items-center table-flush">
+                        <div class="col-lg-12">
+                            <div class="card mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">DataTables with Hover</h6>
+                                </div>
+                                <div class="table-responsive p-3">
+                                    <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                                         <thead class="thead-light">
                                             <tr>
                                                 <th style="text-align: center">Nama Menu</th>
@@ -122,27 +124,11 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="card-footer"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!---Container Fluid-->
             </div>
-            <!-- Footer -->
-            {{-- <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>copyright &copy;
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script> - developed by
-                            <b><a href="https://indrijunanda.gitlab.io/" target="_blank">indrijunanda</a></b>
-                        </span>
-                    </div>
-                </div>
-            </footer> --}}
-            <!-- Footer -->
         </div>
     </div>
 
