@@ -63,7 +63,10 @@ Route::prefix('/penjual')->group(function () {
 
     // menu
     Route::get('tambah-menu', [PenjualMenuController::class, 'addMenuView'])->name('menu.add.view')->middleware('penjual');
+    Route::post('tambah-menu-process', [PenjualMenuController::class, 'addMenuProcess'])->name('menu.add.process')->middleware('penjual');
     Route::get('data-menu', [PenjualMenuController::class, 'dataMenuView'])->name('menu.data.view')->middleware('penjual');
-    Route::get('edit-menu', [PenjualMenuController::class, 'editMenuView'])->name('menu.edit.view')->middleware('penjual');
+    Route::get('edit-menu/{id}', [PenjualMenuController::class, 'editMenuView'])->name('menu.edit.view')->middleware('penjual');
+    Route::put('edit-menu-process/{id}', [PenjualMenuController::class, 'editMenuProcess'])->name('menu.edit.process')->middleware('penjual');
+    Route::delete('delete-menu/{id}', [PenjualMenuController::class, 'deleteMenuProcess'])->name('menu.delete.process')->middleware('penjual');
     // end menu
 });

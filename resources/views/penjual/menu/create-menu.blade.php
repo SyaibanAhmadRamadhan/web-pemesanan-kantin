@@ -16,19 +16,26 @@
                     </div>
                     <div class="card mb-4">
                         <div class="card-body">
-                            <form>
+                            <form action="{{ route('menu.add.process') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <div class="form-group row">
-                                    <label for="nama_menu" class="col-sm-3 col-form-label">Nama Menu</label>
+                                    <label for="name_menu" class="col-sm-3 col-form-label">Nama Menu</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="nama_menu" name="nama_menu"
-                                            placeholder="Ex : soto daging">
+                                        <input type="text" class="form-control" id="name_menu" name="name_menu"
+                                            placeholder="Ex : soto daging" value="{{ old('name_menu') }}">
+                                        @error('name_menu')
+                                            <span style="color: red;">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="price" class="col-sm-3 col-form-label">Harga Menu</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" name="price" id="price"
-                                            placeholder="Ex : 200000">
+                                            placeholder="Ex : 200000" value="{{ old('price') }}">
+                                        @error('price')
+                                            <span style="color: red;">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -37,40 +44,43 @@
                                         <img class="img-show mb-3 img-fluid rounded d-block" style="height: 200px"
                                             id="foto" alt=""><br><br>
                                         <input type="file" name="picture" class="form-control-file" id="picture"
-                                            onchange="previewImage()">
-                                        <input type="hidden" name="action" id="action">
+                                            onchange="previewImage()" value="{{ old('picture') }}">
+                                        <input type="hidden" name="action" id="action"">
                                         <span id="lblError" style="color: red;"></span>
+                                        @error('picture')
+                                            <span style="color: red;">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <button id="btnSubmit" class="btn-info btn">Tambah</button>
+                                    <button id="btnSubmit" type="submit" class="btn-info btn">Tambah</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Footer -->
-            {{-- <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>copyright &copy;
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script> - developed by
-                            <b><a href="https://indrijunanda.gitlab.io/" target="_blank">indrijunanda</a></b>
-                        </span>
-                    </div>
-                </div>
-            </footer> --}}
-            <!-- Footer -->
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        function previewImage() {
-            const image = document.querySelector('#picture');
+        @if (old('picture'))
             const imageShow = document.querySelector('.img-show');
+            const image = document.querySelector('#picture');
+            imageShow.style.display = 'block';
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
+            alert('r');
+            oFReader.onload = function(oFREvent) {
+                if (image.value) {
+                    imageShow.src = oFREvent.target.result;
+                }
+            }
+        @endif
+
+        function previewImage() {
+            const imageShow = document.querySelector('.img-show');
+            const image = document.querySelector('#picture');
             imageShow.src = ''
             if (image.value) {
                 let action = document.querySelector('#action')
