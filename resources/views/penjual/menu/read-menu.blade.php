@@ -53,7 +53,6 @@
                             </div>
                         </div>
                     </div>
-                    @include('partials.penjual-modal-logout')
                 </div>
                 <!---Container Fluid-->
             </div>

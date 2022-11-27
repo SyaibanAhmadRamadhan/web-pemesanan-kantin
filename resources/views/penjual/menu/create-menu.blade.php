@@ -48,7 +48,6 @@
                             </form>
                         </div>
                     </div>
-                    @include('partials.penjual-modal-logout')
                 </div>
             </div>
             <!-- Footer -->

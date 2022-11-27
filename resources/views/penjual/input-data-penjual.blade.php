@@ -21,7 +21,6 @@
             </div>
         </nav>
 
-        <!-- auth -->
         <section id="auth">
             <div class="container my-5">
                 <div class="row justify-content-center">
@@ -69,6 +68,5 @@
                 </div>
             </div>
         </section>
-        <!-- auth Akhir -->
     </section>
 @endsection
