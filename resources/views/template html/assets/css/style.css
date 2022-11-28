@@ -15,6 +15,10 @@ body {
   color: #fc4a1a !important;
 }
 
+.btn-danger {
+  background-color: #fc4a1a !important;
+}
+
 .shadow-primary {
   box-shadow: var(--var-shadow);
 }
