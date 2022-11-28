@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('pesanan', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_user')->constrained('users')->onDelete('CASCADE')->onUpdate('CASCADE');
-            $table->foreignId('id_warung')->constrained('penjual')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreignId('id_penjual')->constrained('users')->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->foreignId('id_menu')->constrained('daftar_menu')->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->string('nomer_antrian');
             $table->string('jumlah_pesanan');

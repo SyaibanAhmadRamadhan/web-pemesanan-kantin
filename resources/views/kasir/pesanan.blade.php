@@ -22,11 +22,6 @@
         <section id="dpenjual">
             <div class="container-fluid p-5">
                 <div class="row">
-                    <div class="col-lg px-0">
-                        <h3>List Pesanan</h3>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-12 py-3 text-white" style="background-color: #4abdac">
                         <h5 class="mb-0">Pesanan</h5>
                     </div>
@@ -51,7 +46,8 @@
                                     @if ($value->status_pesanan == 'dibatalkan')
                                         dibatalkan
                                     @else
-                                        {{ $value->status_pembayaran }}
+                                        {{ $value->status_pembayaran }} @if ($value->status_pesanan != null)
+                                        @endif | {{ $value->status_pesanan }}
                                     @endif <a
                                         href="{{ route('kasir.detial.pesanan.view', ['id' => $value->nomer_pesanan]) }}">detail
                                         pesanan</a>
@@ -61,6 +57,9 @@
                                 $nomer_pesanan_var = $value->nomer_pesanan;
                             @endphp
                         @endforeach
+                        @if (count($pesanan) == 0)
+                            <p>tidak ada pesanan</p>
+                        @endif
                     </div>
                 </div>
             </div>

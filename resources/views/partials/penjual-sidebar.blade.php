@@ -31,8 +31,8 @@
             </div>
         </div>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+    <li class="nav-item @if ($title == 'pesanan') active @endif">
+        <a class="nav-link" href="{{ route('penjual.pesanan.view') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Pesanan</span>
         </a>

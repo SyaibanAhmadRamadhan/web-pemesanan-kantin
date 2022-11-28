@@ -119,13 +119,16 @@ class DetailPesananController extends Controller
         } else {
             $nomerAntrian = $pesanan->nomer_antrian + 1;
         }
-        $nomerPesanan = $jumlahPesanan->nomer_pesanan + 1;
+        if ($jumlahPesanan == null) {
+            $nomerPesanan = 1;
+        } else {
+            $nomerPesanan = $jumlahPesanan->nomer_pesanan + 1;
+        }
         foreach (session()->get('pemesanan') as $key => $x) {
             $menu = DaftarMenuModel::where('id', substr($key, 3))->first();
-            $dataPenjual = PenjualModel::where('id_penjual', $menu->id_penjual)->first();
             $pesanan = PesananModel::create([
                 'id_user' => Auth()->user()->id,
-                'id_warung' => $dataPenjual->id,
+                'id_penjual' => $menu->id_penjual,
                 'jumlah_pesanan' => $x,
                 'nomer_pesanan' => $nomerPesanan,
                 'nomer_antrian' => $nomerAntrian,

@@ -106,6 +106,18 @@
                                 @endif
                             </div>
                         </div>
+                        @if ($pesanan[0]->status_pesanan == 'pesanan telah siap')
+                            <form action="{{ route('pembeli.konfirmasi.pesanan.view') }}" method="post">
+                                @csrf
+                                @method('put')
+                                <div class="text-center pt-4">
+                                    <input type="hidden" value="{{ $pesanan[0]->nomer_pesanan }}" name="nomer_pesanan">
+                                    <button type="submit" class="btn btn-danger rounded-pill px-4 py-3">
+                                        <h5 class="mb-0">Konfirmasi Pesanan Diterima</h5>
+                                    </button>
+                                </div>
+                            </form>
+                        @endif
                     </div>
                 </div>
             </div>

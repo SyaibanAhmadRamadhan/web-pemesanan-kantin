@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DaftarMenuModel;
+use App\Models\NotifPenjualModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -13,16 +14,20 @@ class PenjualMenuController extends Controller
     public function dataMenuView()
     {
         $menu = DaftarMenuModel::where('id_penjual', Auth()->user()->id)->get();
+        $notif = NotifPenjualModel::where('status', 'unread')->where('id_penjual', Auth()->user()->id)->get();
         return view('penjual.menu.read-menu', [
             'title' => 'data-menu',
-            'menu' => $menu
+            'menu' => $menu,
+            'notif' => $notif,
         ]);
     }
 
     public function addMenuView()
     {
+        $notif = NotifPenjualModel::where('status', 'unread')->where('id_penjual', Auth()->user()->id)->get();
         return view('penjual.menu.create-menu', [
-            'title' => 'tambah-menu'
+            'title' => 'tambah-menu',
+            'notif' => $notif
         ]);
     }
 
@@ -54,9 +59,11 @@ class PenjualMenuController extends Controller
         if (!$menu) {
             return redirect()->route('menu.data.view')->with('info', 'menu tidak ditemukan');
         }
+        $notif = NotifPenjualModel::where('status', 'unread')->where('id_penjual', Auth()->user()->id)->get();
         return view('penjual.menu.update-menu', [
             'title' => 'edit-menu',
-            'menu' => $menu
+            'menu' => $menu,
+            'notif' => $notif
         ]);
     }
 

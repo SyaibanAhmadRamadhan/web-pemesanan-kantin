@@ -12,7 +12,7 @@ class PesananModel extends Model
     protected $table = 'pesanan';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id', 'id_user', 'id_warung', 'nomer_antrian', 'status_pesanan', 'status_pembayaran', 'jumlah_pesanan', 'total_harga', 'nomer_pesanan', 'id_menu'
+        'id', 'id_user', 'id_penjual', 'nomer_antrian', 'status_pesanan', 'status_pembayaran', 'jumlah_pesanan', 'total_harga', 'nomer_pesanan', 'id_menu'
     ];
 
     public function getNomerPesanan($param)

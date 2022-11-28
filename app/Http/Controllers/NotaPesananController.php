@@ -16,7 +16,7 @@ class NotaPesananController extends Controller
         $pesanan = PesananModel::where('nomer_pesanan', $id)->get();
         $menu = PenjualModel::where(function ($query) use ($pesanan) {
             foreach ($pesanan as $key => $x) {
-                $query->orWhere('id', $x->id_warung);
+                $query->orWhere('id_penjual', $x->id_penjual);
             }
         })->get();
         return view('pembeli.nota-pemesanan', [
@@ -25,5 +25,23 @@ class NotaPesananController extends Controller
             'pesanan' => $pesanan,
             'menu' => $menu
         ]);
+    }
+
+    public function konfirmasiPesanan(Request $request)
+    {
+        $pesanan = PesananModel::where('nomer_pesanan', $request->nomer_pesanan)->get();
+        if (count($pesanan) == 0) {
+            return back()->with('info', 'pesanan tidak tersedia');
+        }
+        try {
+            foreach ($pesanan as $key => $x) {
+                PesananModel::where('nomer_pesanan', $x->nomer_pesanan)->update([
+                    'status_pesanan' => 'pesanan selesai',
+                ]);
+            }
+            return redirect()->route('nota.pesanan.view', ['id' => $request->nomer_pesanan])->with('success', 'pesanan berhasil diupdate');
+        } catch (\Throwable $th) {
+            return back()->with('error', 'terjadi kesalahan pada server');
+        }
     }
 }

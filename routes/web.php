@@ -8,6 +8,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\NotaPesananController;
 use App\Http\Controllers\PenjualDashboardController;
 use App\Http\Controllers\PenjualMenuController;
+use App\Http\Controllers\PenjualPesananController;
 use App\Http\Controllers\PenjualProfileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisterController;
@@ -59,10 +60,12 @@ Route::prefix('/')->group(function () {
 
     // nota
     Route::get('nota-pesanan/{id}', [NotaPesananController::class, 'notaView'])->name('nota.pesanan.view')->middleware('pembeli');
+    Route::put('kofirmasi-pesanan-pembeli', [NotaPesananController::class, 'konfirmasiPesanan'])->name('pembeli.konfirmasi.pesanan.view')->middleware('pembeli');
     // end nota
 
     // list pemesanan
     Route::get('list-pesanan', [ListPesananController::class, 'listPesananView'])->name('list.pesanan.view')->middleware('pembeli');
+
     // end list pemesanan
 });
 
@@ -84,6 +87,12 @@ Route::prefix('/penjual')->group(function () {
     Route::put('edit-menu-process/{id}', [PenjualMenuController::class, 'editMenuProcess'])->name('menu.edit.process')->middleware('penjual');
     Route::delete('delete-menu/{id}', [PenjualMenuController::class, 'deleteMenuProcess'])->name('menu.delete.process')->middleware('penjual');
     // end menu
+
+    // pesanan
+    Route::get('pesanan', [PenjualPesananController::class, 'pesananView'])->name('penjual.pesanan.view')->middleware('penjual');
+    Route::get('detail-pesanan/{id}', [PenjualPesananController::class, 'pesananDetailView'])->name('penjual.detail.pesanan.view')->middleware('penjual');
+    Route::put('kofirmasi-pesanan-penjual', [PenjualPesananController::class, 'konfirmasiPesanan'])->name('penjual.konfirmasi.pesanan.view')->middleware('penjual');
+    // endpesanan
 });
 
 Route::prefix('/kasir')->group(function () {
