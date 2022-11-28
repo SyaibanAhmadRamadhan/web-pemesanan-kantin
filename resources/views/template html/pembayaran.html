@@ -71,20 +71,20 @@
         <div class="container">
           <div class="row">
             <div class="py-2 col-lg-8" style="overflow-x: scroll">
-              <table class="table overflow-scroll">
-                <thead>
-                  <tr class="table-secondary">
-                    <th scope="col">#</th>
-                    <th scope="col">NOMOR ANTRIAN</th>
-                    <th scope="col">PESANAN</th>
-                    <th scope="col">JUMLAH TOTAL PESANAN</th>
-                    <th scope="col">HARGA</th>
-                    <th scope="col">SUB TOTAL</th>
-                    <th scope="col">BATAL</th>
+              <table class="table table-bordered">
+                <tbody class="mt-0">
+                  <tr class="table-secondary text-center">
+                    <th>#</th>
+                    <th>NOMOR ANTRIAN</th>
+                    <th class="w-100 px-5">PESANAN</th>
+                    <th>JUMLAH TOTAL PESANAN</th>
+                    <th class="px-5">HARGA</th>
+                    <th class="px-5">SUB TOTAL</th>
+                    <th class="w-100">BATAL</th>
                   </tr>
-                </thead>
+                </tbody>
                 <tbody>
-                  <tr>
+                  <tr class="text-center">
                     <th scope="row">1</th>
                     <td>12</td>
                     <td>
@@ -100,7 +100,7 @@
                       <p class="mb-0">Rp. 27.000</p>
                     </td>
                     <td>
-                      <button type="button" class="btn btn-danger rounded-pill shadow-primary">HAPUS</button>
+                      <button type="button" class="btn btn-danger rounded-pill shadow-primary btn-sm">HAPUS</button>
                     </td>
                   </tr>
                 </tbody>
@@ -124,6 +124,9 @@
                   </tr>
                 </tbody>
               </table>
+              <div class="text-center">
+                <button type="button" class="btn btn-danger rounded-2 shadow-primary">HAPUS</button>
+              </div>
             </div>
           </div>
         </div>
