@@ -126,9 +126,12 @@
                                 </div>
                             </div>
                             <div class="text-center pt-4">
-                                <button type="button" class="btn btn-danger rounded-pill px-4 py-3">
-                                    <h5 class="mb-0">Pesan Sekarang</h5>
-                                </button>
+                                <form action="{{ route('pemesanan.process.detail') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger rounded-pill px-4 py-3">
+                                        <h5 class="mb-0">Pesan Sekarang</h5>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -147,44 +150,46 @@
     </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        @foreach (session('pemesanan') as $key => $x)
-            $("#qty{{ substr($key, 3) }}").on("keyup change", function() {
-                let qty = 'qty{{ substr($key, 3) }}';
-                let valQty = $("#qty{{ substr($key, 3) }}").val();
-                $.ajax({
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: "{{ route('pemesanan.update.session') }}",
-                    data: {
-                        qty: qty,
-                        valQty: valQty,
-                    },
-                    success: function(data) {
-                        if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500)) {
-                            const rupiah = (number) => {
-                                return new Intl.NumberFormat("id-ID", {
-                                    style: "currency",
-                                    currency: "IDR",
-                                    minimumFractionDigits: 0,
-                                }).format(number);
-                            }
-                            $("#totalMenu{{ substr($key, 3) }}").text(rupiah(data.total));
-                            $("#subTotal").text(rupiah(data.subTotal));
-                        } else {
-                            if (data.error500) {
-                                if (alert('maaf terjadi kesalah pada server')) {} else window
-                                    .location.reload();
+    @if ($urlStatus == true)
+        <script>
+            @foreach (session('pemesanan') as $key => $x)
+                $("#qty{{ substr($key, 3) }}").on("keyup change", function() {
+                    let qty = 'qty{{ substr($key, 3) }}';
+                    let valQty = $("#qty{{ substr($key, 3) }}").val();
+                    $.ajax({
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ route('pemesanan.update.session') }}",
+                        data: {
+                            qty: qty,
+                            valQty: valQty,
+                        },
+                        success: function(data) {
+                            if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500)) {
+                                const rupiah = (number) => {
+                                    return new Intl.NumberFormat("id-ID", {
+                                        style: "currency",
+                                        currency: "IDR",
+                                        minimumFractionDigits: 0,
+                                    }).format(number);
+                                }
+                                $("#totalMenu{{ substr($key, 3) }}").text(rupiah(data.total));
+                                $("#subTotal").text(rupiah(data.subTotal));
                             } else {
-                                if (alert('maaf terjadi kesalahan')) {} else window
-                                    .location.reload();
+                                if (data.error500) {
+                                    if (alert('maaf terjadi kesalah pada server')) {} else window
+                                        .location.reload();
+                                } else {
+                                    if (alert('maaf terjadi kesalahan')) {} else window
+                                        .location.reload();
+                                }
                             }
                         }
-                    }
+                    })
                 })
-            })
-        @endforeach
-    </script>
+            @endforeach
+        </script>
+    @endif
 @endsection

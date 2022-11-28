@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\DetailPesananController;
+use App\Http\Controllers\ListPesananController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\NotaPesananController;
 use App\Http\Controllers\PenjualDashboardController;
 use App\Http\Controllers\PenjualMenuController;
 use App\Http\Controllers\PenjualProfileController;
@@ -50,7 +52,16 @@ Route::prefix('/')->group(function () {
     Route::get('detail-pesanan', [DetailPesananController::class, 'detailPesananView'])->name('detail.pesanan.view')->middleware('pembeli');
     Route::post('pemesanan-update-session', [DetailPesananController::class, 'updatePemesananSession'])->name('pemesanan.update.session')->middleware('pembeli');
     Route::delete('delete-pemesanan/{id}', [DetailPesananController::class, 'deletePemesananProcess'])->name('pemesanan.delete.process')->middleware('pembeli');
+    Route::post('pemesanan-process-detail', [DetailPesananController::class, 'pesananProcess'])->name('pemesanan.process.detail')->middleware('pembeli');
     // end detail-pesanan
+
+    // nota
+    Route::get('nota-pesanan/{id}', [NotaPesananController::class, 'notaView'])->name('nota.pesanan.view')->middleware('pembeli');
+    // end nota
+
+    // list pemesanan
+    Route::get('list-pesanan', [ListPesananController::class, 'listPesananView'])->name('list.pesanan.view')->middleware('pembeli');
+    // end list pemesanan
 });
 
 Route::prefix('/penjual')->group(function () {

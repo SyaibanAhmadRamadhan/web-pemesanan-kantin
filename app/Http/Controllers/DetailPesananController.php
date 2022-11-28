@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\Penjualan;
 use App\Models\DaftarMenuModel;
 use App\Models\PembeliModel;
 use App\Models\PenjualModel;
+use App\Models\PesananModel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -28,6 +31,9 @@ class DetailPesananController extends Controller
                     }
                 })->get();
                 $urlStatus = true;
+                if (!session()->get('pemesanan')) {
+                    $urlStatus = false;
+                }
             } catch (\Throwable $th) {
                 $urlStatus = false;
                 $pesanan = [];
@@ -101,5 +107,34 @@ class DetailPesananController extends Controller
         $implodeMenu = implode(" ", $idMenu);
         $encyrptImplodeMenu = Crypt::encryptString($implodeMenu);
         return redirect()->route('detail.pesanan.view', ['state' => $encyrptImplodeMenu]);
+    }
+
+    public function pesananProcess()
+    {
+        $nomerAntrian = 1;
+        $pesanan = PesananModel::whereDate('created_at', Carbon::today())->orderBy('nomer_antrian', 'DESC')->first();
+        $jumlahPesanan = PesananModel::orderBy('nomer_pesanan', 'DESC')->first();
+        if ($pesanan == null) {
+            $nomerAntrian = 1;
+        } else {
+            $nomerAntrian = $pesanan->nomer_antrian + 1;
+        }
+        $nomerPesanan = $jumlahPesanan->nomer_pesanan + 1;
+        foreach (session()->get('pemesanan') as $key => $x) {
+            $menu = DaftarMenuModel::where('id', substr($key, 3))->first();
+            $dataPenjual = PenjualModel::where('id_penjual', $menu->id_penjual)->first();
+            $pesanan = PesananModel::create([
+                'id_user' => Auth()->user()->id,
+                'id_warung' => $dataPenjual->id,
+                'jumlah_pesanan' => $x,
+                'nomer_pesanan' => $nomerPesanan,
+                'nomer_antrian' => $nomerAntrian,
+                'total_harga' => $x * $menu->price,
+                'id_menu' => $menu->id,
+                'status_pembayaran' => 'belum bayar'
+            ]);
+        }
+        session()->forget('pemesanan');
+        return redirect()->route('nota.pesanan.view', ['id' => $nomerPesanan])->with('success', 'pesanan berhasil dibuat');
     }
 }

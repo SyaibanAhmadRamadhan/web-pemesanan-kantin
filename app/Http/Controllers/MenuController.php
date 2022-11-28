@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\DaftarMenuModel;
 use App\Models\PenjualModel;
+use App\Models\PesananModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 
 class MenuController extends Controller
@@ -45,6 +47,9 @@ class MenuController extends Controller
     {
         if ($request->valQty < 1) {
             return response()->json(['error' => 'pemesanan harus lebih dari 1']);
+        }
+        if (PesananModel::where('id_user', Auth()->user()->id)->where('status_pembayaran', 'belum bayar')->first()) {
+            return response()->json(['error' => 'silahkan lakukan pembayaran pada pesanan anda sebelumnya']);
         }
         try {
             $obj = [];
