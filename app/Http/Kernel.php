@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'penjual' => \App\Http\Middleware\Penjualan::class,
         'pembeli' => \App\Http\Middleware\Pembeli::class,
         'inputdatapenjual' => \App\Http\Middleware\InputDataPenjual::class,
-        'withoutpenjual' => \App\Http\Middleware\WithoutPenjual::class
+        'withoutpenjual' => \App\Http\Middleware\WithoutPenjual::class,
+        'kasir' => \App\Http\Middleware\Kasir::class,
     ];
 }

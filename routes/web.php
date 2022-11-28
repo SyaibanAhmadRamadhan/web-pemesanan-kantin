@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DetailPesananController;
+use App\Http\Controllers\KasirController;
 use App\Http\Controllers\ListPesananController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MenuController;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 
 Route::prefix('/')->group(function () {
     Route::get('/', [MenuController::class, 'menuView'])->name('menu.view')->middleware('withoutpenjual');
@@ -82,4 +84,11 @@ Route::prefix('/penjual')->group(function () {
     Route::put('edit-menu-process/{id}', [PenjualMenuController::class, 'editMenuProcess'])->name('menu.edit.process')->middleware('penjual');
     Route::delete('delete-menu/{id}', [PenjualMenuController::class, 'deleteMenuProcess'])->name('menu.delete.process')->middleware('penjual');
     // end menu
+});
+
+Route::prefix('/kasir')->group(function () {
+    Route::get('pesanan', [KasirController::class, 'kasirView'])->name('kasir.pesanan.view')->middleware('kasir');
+    Route::get('detail-pesanan/{id}', [KasirController::class, 'detailPesanan'])->name('kasir.detial.pesanan.view')->middleware('kasir');
+    Route::get('search', [KasirController::class, 'kasirSearchView'])->name('kasir.search.view')->middleware('kasir');
+    Route::put('konfirmasi-pesanan', [KasirController::class, 'konfirmasiPesanan'])->name('kasir.konfirmasi.pesanan.view')->middleware('kasir');
 });

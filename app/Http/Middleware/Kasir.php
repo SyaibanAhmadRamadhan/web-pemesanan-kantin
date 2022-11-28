@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class WithoutPenjual
+class Kasir
 {
     /**
      * Handle an incoming request.
@@ -17,11 +17,7 @@ class WithoutPenjual
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role == 'penjual') {
-            return redirect()->route('dashboard.view');
-        } elseif (Auth::check() && Auth::user()->role == 'kasir') {
-            return redirect()->route('kasir.pesanan.view');
-        } else {
+        if (Auth::check() && Auth::user()->role == 'kasir') {
             return $next($request);
         }
         return redirect('');

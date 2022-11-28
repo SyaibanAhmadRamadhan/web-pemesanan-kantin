@@ -19,4 +19,9 @@ class PesananModel extends Model
     {
         return DB::table('pesanan')->where('nomer_pesanan', $param)->join("daftar_menu", "daftar_menu.id", "=", "pesanan.id_menu")->get();
     }
+
+    public function getUser()
+    {
+        return $this->belongsTo(User::class, 'id_user');
+    }
 }

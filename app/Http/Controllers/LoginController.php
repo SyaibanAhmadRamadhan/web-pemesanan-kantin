@@ -27,6 +27,9 @@ class LoginController extends Controller
             } elseif (Auth()->user()->role == 'penjual') {
                 $request->session()->regenerate();
                 return redirect()->route('dashboard.view');
+            } elseif (Auth()->user()->role == 'kasir') {
+                $request->session()->regenerate();
+                return redirect()->route('kasir.pesanan.view');
             }
         }
         return redirect()->route('login.view')->withInput($request->all())->with(['errors' => 'nomor atau password salah']);
