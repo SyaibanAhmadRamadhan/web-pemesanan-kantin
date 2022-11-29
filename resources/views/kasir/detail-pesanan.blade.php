@@ -45,7 +45,7 @@
                                     @foreach ($p->getMenu($search) as $x)
                                         @foreach ($pesanan as $key => $z)
                                             @if ($z->id_menu == $x->id)
-                                                <div class="d-flex border-bottom border-2 py-4">
+                                                <div class="d-flex border-2 py-4">
                                                     <img src="{{ asset('menu/' . $x->picture) }}" width="110"
                                                         alt="" />
                                                     <div class="mt-auto ps-3">
@@ -55,6 +55,9 @@
                                                     </div>
                                                     <p class="text-end w-100 mt-auto mb-0">@rupiah($z->total_harga)</p>
                                                 </div>
+                                                <p class="text-end w-100 mt-auto mb-0 text-info">{{ $z->status_pesanan }}
+                                                </p><br>
+                                                <div class="border-bottom "></div>
                                                 @php
                                                     $subTotal += $z->total_harga;
                                                 @endphp
@@ -83,38 +86,52 @@
                                     @if ($pesanan[0]->status_pesanan == null)
                                         belum melakukan bayar
                                     @else
+                                        @php
+                                            $status = false;
+                                        @endphp
+                                        @foreach ($pesanan as $key => $x)
+                                            @if ($x->status_pesanan == 'pesanan disiapkan')
+                                                pesanan disiapkan
+                                                @php
+                                                    $status = true;
+                                                @endphp
+                                            @break
+                                        @endif
+                                    @endforeach
+                                    @if ($status == false)
                                         {{ $pesanan[0]->status_pesanan }}
                                     @endif
-                                </h5>
-                            </div>
-                            <div class="d-flex border-2 py-4">
-                                @if ($pesanan[0]->status_pesanan == 'dibatalkan')
-                                    <h5 class="mb-0 w-100 fw-bold text-danger">dibatalkan</h5>
-                                @else
-                                    <h5
-                                        class="mb-0 w-100 fw-bold @if ($pesanan[0]->status_pembayaran == 'belum bayar') text-danger
+                                @endif
+                            </h5>
+                        </div>
+                        <div class="d-flex border-2 py-4">
+                            @if ($pesanan[0]->status_pesanan == 'dibatalkan')
+                                <h5 class="mb-0 w-100 fw-bold text-danger">dibatalkan</h5>
+                            @else
+                                <h5
+                                    class="mb-0 w-100 fw-bold @if ($pesanan[0]->status_pembayaran == 'belum bayar') text-danger
                                         @else
                                         text-success @endif"">
-                                        {{ $pesanan[0]->status_pembayaran }}</h5>
-                                @endif
-                            </div>
+                                    {{ $pesanan[0]->status_pembayaran }}</h5>
+                            @endif
                         </div>
-                        @if ($pesanan[0]->status_pesanan == null)
-                            <form action="{{ route('kasir.konfirmasi.pesanan.view') }}" method="post">
-                                @csrf
-                                @method('put')
-                                <div class="text-center pt-4">
-                                    <input type="hidden" value="{{ $pesanan[0]->nomer_pesanan }}" name="nomer_pesanan">
-                                    <button type="submit" class="btn btn-danger rounded-pill px-4 py-3">
-                                        <h5 class="mb-0">Konfirmasi Pembayaran</h5>
-                                    </button>
-                                </div>
-                            </form>
-                        @endif
                     </div>
+                    @if ($pesanan[0]->status_pesanan == null)
+                        <form action="{{ route('kasir.konfirmasi.pesanan.view') }}" method="post">
+                            @csrf
+                            @method('put')
+                            <div class="text-center pt-4">
+                                <input type="hidden" value="{{ $pesanan[0]->nomer_pesanan }}" name="nomer_pesanan">
+                                <button type="submit" class="btn btn-danger rounded-pill px-4 py-3">
+                                    <h5 class="mb-0">Konfirmasi Pembayaran</h5>
+                                </button>
+                            </div>
+                        </form>
+                    @endif
                 </div>
             </div>
-        </section>
+        </div>
     </section>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 @endsection

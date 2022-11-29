@@ -33,7 +33,7 @@ class PenjualPesananController extends Controller
 
     public function pesananDetailView($id)
     {
-        $pesanan = PesananModel::where('nomer_pesanan', $id)->get();
+        $pesanan = PesananModel::where('nomer_pesanan', $id)->where('id_penjual', Auth()->user()->id)->get();
         $menu = PenjualModel::where(function ($query) use ($pesanan) {
             foreach ($pesanan as $key => $x) {
                 $query->orWhere('id_penjual', $x->id_penjual);
@@ -55,11 +55,11 @@ class PenjualPesananController extends Controller
         }
         try {
             foreach ($pesanan as $key => $x) {
-                PesananModel::where('nomer_pesanan', $x->nomer_pesanan)->update([
+                PesananModel::where('nomer_pesanan', $x->nomer_pesanan)->where('id_penjual', Auth()->user()->id)->update([
                     'status_pesanan' => 'pesanan telah siap',
                 ]);
             }
-            NotifPenjualModel::where('nomer_pesanan', $request->nomer_pesanan)->update([
+            NotifPenjualModel::where('nomer_pesanan', $request->nomer_pesanan)->where('id_penjual', Auth()->user()->id)->update([
                 'status' => 'read'
             ]);
             return back()->with('success', 'pesanan berhasil diupdate');

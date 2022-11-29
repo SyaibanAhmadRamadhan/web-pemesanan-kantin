@@ -74,6 +74,8 @@
                                                                             @method('PUT')
                                                                             <input type="hidden" name="nomer_pesanan"
                                                                                 value="{{ $x->nomer_pesanan }}">
+                                                                            <input type="hidden" name="id_menu"
+                                                                                value="{{ $x->id_menu }}">
                                                                             <button type="submit"
                                                                                 class="btn btn-info">Konfirmasi</button>
                                                                         </form>

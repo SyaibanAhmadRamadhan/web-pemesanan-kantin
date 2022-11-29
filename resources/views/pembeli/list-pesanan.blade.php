@@ -42,12 +42,10 @@
                                     text-success @endif">
                                     @if ($value->status_pesanan == 'dibatalkan')
                                         dibatalkan
+                                    @elseif($value->status_pesanan == 'pesanan selesai')
+                                        {{ $value->status_pembayaran }} | pesanan selesai
                                     @else
-                                        {{ $value->status_pembayaran }} @if ($value->status_pesanan == 'pesanan selesai' ||
-                                            $value->status_pesanan == 'pesanan disiapkan' ||
-                                            $value->status_pesanan == 'pesanan telah siap')
-                                            | {{ $value->status_pesanan }}
-                                        @endif
+                                        {{ $value->status_pembayaran }}
                                     @endif <a
                                         href="{{ route('nota.pesanan.view', ['id' => $value->nomer_pesanan]) }}">detail
                                         pesanan</a>

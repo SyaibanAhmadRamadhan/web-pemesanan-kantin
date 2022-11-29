@@ -25,7 +25,7 @@
                                             <div class="mt-2 mb-0 text-muted text-xs">
                                                 <span class="text-success mr-2">
                                                     Total Pesanan : </span>
-                                                <span>20</span>
+                                                <span>{{ $countPesanan }}</span>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -43,11 +43,12 @@
                                             <div class="text-xs font-weight-bold text-uppercase mb-1">Pembeli</div>
                                             <div class="mt-2 mb-0 text-muted text-xs">
                                                 <span class="text-success mr-2">Total Pembeli : </span>
-                                                <span>20 orang</span>
+                                                <span>{{ $countPembeli }} orang</span>
                                             </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-shopping-cart fa-2x text-success"></i>
+
                                         </div>
                                     </div>
                                 </div>
@@ -62,12 +63,12 @@
                                             </div>
                                             <div class="mt-2 mb-0 text-muted text-xs">
                                                 <span class="text-success mr-2">
-                                                    Total Menu Terjual</span>
-                                                <span>20 </span>
+                                                    Total Menu</span>
+                                                <span>{{ $countMenu }} </span>
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-warning"></i>
+                                            <i class="fas fa-utensils fa-2x text-warning"></i>
                                         </div>
                                     </div>
                                 </div>

@@ -28,6 +28,8 @@
                     <div class="col-lg-12 bg-white pt-3">
                         @php
                             $nomer_pesanan_var = 0;
+                            $nomer = 1;
+                            $status = false;
                         @endphp
                         @foreach ($pesanan as $key => $value)
                             @if ($nomer_pesanan_var == $value->nomer_pesanan)
@@ -45,9 +47,10 @@
                                     text-success @endif">
                                     @if ($value->status_pesanan == 'dibatalkan')
                                         dibatalkan
+                                    @elseif($value->status_pesanan == 'pesanan selesai')
+                                        {{ $value->status_pembayaran }} | pesanan selesai
                                     @else
-                                        {{ $value->status_pembayaran }} @if ($value->status_pesanan != null)
-                                        @endif | {{ $value->status_pesanan }}
+                                        {{ $value->status_pembayaran }}
                                     @endif <a
                                         href="{{ route('kasir.detial.pesanan.view', ['id' => $value->nomer_pesanan]) }}">detail
                                         pesanan</a>

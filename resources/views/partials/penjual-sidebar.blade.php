@@ -17,7 +17,7 @@
     <li class="nav-item @if ($title == 'data-menu' || $title == 'tambah-menu') active @endif">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
             aria-expanded="true" aria-controls="collapseBootstrap">
-            <i class="far fa-fw fa-window-maximize"></i>
+            <i class="fas fa-fw fa-utensils"></i>
             <span>Menu</span>
         </a>
         <div id="collapseBootstrap" class="collapse @if ($title == 'data-menu' || $title == 'tambah-menu') show @endif"
@@ -33,7 +33,7 @@
     </li>
     <li class="nav-item @if ($title == 'pesanan') active @endif">
         <a class="nav-link" href="{{ route('penjual.pesanan.view') }}">
-            <i class="fas fa-fw fa-chart-area"></i>
+            <i class="fas fa-fw fa-calendar"></i>
             <span>Pesanan</span>
         </a>
     </li>
