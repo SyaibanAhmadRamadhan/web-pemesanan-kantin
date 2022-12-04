@@ -33,7 +33,11 @@
                                 @foreach ($pesanan as $key => $p)
                                     <div class="col-lg-12">
                                         <br>
-                                        <h5>{{ $p->nama_warung }}</h5>
+                                        <h5>
+                                            @foreach ($p->getPenjual() as $key => $y)
+                                                {{ $y->nama_warung }}
+                                            @endforeach
+                                        </h5>
                                     </div>
                                     <div class="col-lg">
                                         @foreach ($p->getMenu($search) as $x)

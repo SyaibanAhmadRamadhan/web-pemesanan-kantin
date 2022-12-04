@@ -6,6 +6,7 @@ use App\Models\DaftarMenuModel;
 use App\Models\PembeliModel;
 use App\Models\PenjualModel;
 use App\Models\PesananModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -14,11 +15,11 @@ class NotaPesananController extends Controller
     public function notaView($id)
     {
         $pesanan = PesananModel::where('nomer_pesanan', $id)->get();
-        $menu = PenjualModel::where(function ($query) use ($pesanan) {
+        $menu = User::where(function ($query) use ($pesanan) {
             foreach ($pesanan as $key => $x) {
-                $query->orWhere('id_penjual', $x->id_penjual);
+                $query->orWhere('id', $x->id_penjual);
             }
-        })->get();
+        })->where('role', 'penjual')->get();
         return view('pembeli.nota-pemesanan', [
             'title' => 'nota-pesanan',
             'search' => null,

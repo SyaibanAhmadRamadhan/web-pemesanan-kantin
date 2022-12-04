@@ -7,6 +7,7 @@ use App\Models\DaftarMenuModel;
 use App\Models\PembeliModel;
 use App\Models\PenjualModel;
 use App\Models\PesananModel;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -25,9 +26,9 @@ class DetailPesananController extends Controller
                         $query->orWhere('id', $x);
                     }
                 })->select('id_penjual')->get();
-                $pesanan = PenjualModel::where(function ($query) use ($getIdPenjual) {
+                $pesanan = User::where(function ($query) use ($getIdPenjual) {
                     foreach ($getIdPenjual as $x) {
-                        $query->orWhere('id_penjual', $x->id_penjual);
+                        $query->orWhere('id', $x->id_penjual);
                     }
                 })->get();
                 $urlStatus = true;
