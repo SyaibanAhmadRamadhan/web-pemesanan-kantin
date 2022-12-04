@@ -45,7 +45,7 @@
                                 @foreach ($p->getMenu($search) as $x)
                                     <div class="col-lg-3 py-4">
                                         <div class="card border-0 rounded-4">
-                                            <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4"
+                                            <img src="{{ asset('menu/' . $x->picture) }}" class="card-img-top rounded-4"
                                                 alt="..." />
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $x->name_menu }}</h5>
@@ -63,8 +63,8 @@
                                             <div class="modal-content">
                                                 <div class="modal-body">
                                                     <div class="card border-0 rounded-4">
-                                                        <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4"
-                                                            alt="..." />
+                                                        <img src="{{ asset('menu/' . $x->picture) }}"
+                                                            class="card-img-top rounded-4" alt="..." />
                                                         <div class="card-body">
                                                             <h5 class="card-title">{{ $x->name_menu }}</h5>
                                                             <p class="card-text text-danger">Rp. {{ $x->price }}
@@ -152,7 +152,7 @@
                                 @foreach ($p->getMenu($search) as $x)
                                     <div class="col-lg-3 py-4">
                                         <div class="card border-0 rounded-4">
-                                            <img src="./assets/img/menu1.jpg" class="card-img-top rounded-4"
+                                            <img src="{{ asset('menu/' . $x->picture) }}" class="card-img-top rounded-4"
                                                 alt="..." />
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $x->name_menu }}</h5>
