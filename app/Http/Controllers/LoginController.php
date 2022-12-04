@@ -32,7 +32,7 @@ class LoginController extends Controller
                 return redirect()->route('kasir.pesanan.view');
             }
         }
-        return redirect()->route('login.view')->withInput($request->all())->with(['errors' => 'nomor atau password salah']);
+        return redirect()->route('login.view')->withInput($request->all())->with(['errors_login' => 'username atau password salah']);
     }
 
     public function logout()

@@ -14,8 +14,8 @@ class MenuController extends Controller
 {
     public function menuView()
     {
-        $menu = DaftarMenuModel::get();
-        $penjual = User::where('role', 'penjual')->get();
+        $menu = DaftarMenuModel::all();
+        $penjual = PenjualModel::all();
 
         return view('pembeli.menu', [
             'title' => 'menu',

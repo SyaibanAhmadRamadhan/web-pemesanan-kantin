@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class DaftarMenuModel extends Model
 {
@@ -13,4 +14,9 @@ class DaftarMenuModel extends Model
     protected $fillable = [
         'id', 'name_menu', 'price', 'picture', 'id_penjual'
     ];
+
+    public function getPenjual($param)
+    {
+        return DB::table('penjual')->where('id_penjual', $param)->first();
+    }
 }

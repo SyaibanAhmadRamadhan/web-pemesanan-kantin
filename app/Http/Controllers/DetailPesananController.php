@@ -26,9 +26,9 @@ class DetailPesananController extends Controller
                         $query->orWhere('id', $x);
                     }
                 })->select('id_penjual')->get();
-                $pesanan = User::where(function ($query) use ($getIdPenjual) {
+                $pesanan = PenjualModel::where(function ($query) use ($getIdPenjual) {
                     foreach ($getIdPenjual as $x) {
-                        $query->orWhere('id', $x->id_penjual);
+                        $query->orWhere('id_penjual', $x->id_penjual);
                     }
                 })->get();
                 $urlStatus = true;

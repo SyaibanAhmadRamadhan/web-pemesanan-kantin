@@ -16,10 +16,8 @@
                             @if (Auth()->user()->role == 'pembeli')
                                 <li><a class="dropdown-item" href="{{ route('list.pesanan.view') }}">Pesanan Pembeli</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
                             @elseif(Auth()->user()->role == 'penjual')
                                 <li><a class="dropdown-item" href="#">Pesanan Pembeli</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
                             @endif
                         @endif
                     </ul>

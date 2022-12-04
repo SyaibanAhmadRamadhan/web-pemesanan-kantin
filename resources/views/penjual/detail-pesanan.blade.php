@@ -53,12 +53,8 @@
                                 $subTotal = 0;
                             @endphp
                             @foreach ($menu as $key => $p)
-                                <div class="col-lg-12">
-                                    <br>
-                                    <h5>Soto Sate</h5>
-                                </div>
                                 <div class="col-lg">
-                                    @foreach ($p->getMenu($search) as $x)
+                                    @foreach ($p->getMenu($p->id_penjual) as $x)
                                         @foreach ($pesanan as $key => $z)
                                             @if ($z->id_menu == $x->id)
                                                 <div class="d-flex border-bottom border-2 py-4">

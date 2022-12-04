@@ -20,7 +20,7 @@
                         @php
                             $nomer_pesanan_var = 0;
                         @endphp
-                        @foreach ($pesanan as $key => $value)
+                        @forelse ($pesanan as $key => $value)
                             @if ($nomer_pesanan_var == $value->nomer_pesanan)
                                 @continue
                             @endif
@@ -54,7 +54,9 @@
                             @php
                                 $nomer_pesanan_var = $value->nomer_pesanan;
                             @endphp
-                        @endforeach
+                        @empty
+                            <p>tidak ada riwayat pesanan</p>
+                        @endforelse
                     </div>
                 </div>
             </div>

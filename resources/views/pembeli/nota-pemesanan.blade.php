@@ -39,16 +39,18 @@
                             @foreach ($menu as $key => $p)
                                 <div class="col-lg-12">
                                     <br>
-                                    <h5>Soto Sate</h5>
+                                    <h5>
+                                        {{ $p->nama_warung }}
+                                    </h5>
                                 </div>
                                 <div class="col-lg">
-                                    @foreach ($p->getMenu($search) as $x)
+                                    @foreach ($p->getMenu($p->id_penjual) as $x)
                                         @foreach ($pesanan as $key => $z)
                                             @if ($z->id_menu == $x->id)
                                                 <div class="d-flex border-2 py-4">
                                                     <img src="{{ asset('menu/' . $x->picture) }}" width="110"
                                                         alt="" />
-                                                    <div class="mt-auto ps-3">
+                                                    <div class="mt-auto ps-4">
                                                         <p class="mt-0">{{ $x->name_menu }}</p>
                                                         <p class="mt-0">@rupiah($x->price)</p>
                                                         <p class="text-danger mb-0">{{ $z->jumlah_pesanan }}x</p>
@@ -90,7 +92,7 @@
                                         @php
                                             $status = true;
                                         @endphp
-                                        silahkan lakukan pembayaran terlebih dahulu<br><br>
+                                        silahkan lakukan pembayaran terlebih dahulu dikasir<br><br>
                                         <h6>
                                             <div style="color: red">pemesanan anda akan dibatalkan secara otomatis jika
                                                 sudah
@@ -124,7 +126,27 @@
                             @endif
                         </div>
                     </div>
-                    @if ($status == false)
+
+                    @php
+                        $statusKonfimarsi = true;
+                    @endphp
+                    @foreach ($pesanan as $key => $y)
+                        @if ($y->status_pesanan != 'pesanan telah siap')
+                            @php
+                                $statusKonfimarsi = false;
+                                break;
+                            @endphp
+                        @elseif($y->status_pesanan == 'pesanan telah siap')
+                            @php
+                                $statusKonfimarsi = true;
+                            @endphp
+                        @elseif($y->status_pesanan == 'pesanan selesai')
+                            @php
+                                $statusKonfimarsi = false;
+                            @endphp
+                        @endif
+                    @endforeach
+                    @if ($statusKonfimarsi == true)
                         <form action="{{ route('pembeli.konfirmasi.pesanan.view') }}" method="post">
                             @csrf
                             @method('put')

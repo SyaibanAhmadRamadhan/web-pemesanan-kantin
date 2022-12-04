@@ -33,16 +33,12 @@
                     @else
                         @foreach ($penjual as $key => $p)
                             <div class="row">
-                                @if (count($p->getMenu($search)) > 0)
+                                @if (count($p->getMenu($p->id_penjual)) > 0)
                                     <div class="col-lg-12 px-3 py-2 bg-abu">
-                                        <h3 class="my-0">
-                                            @foreach ($p->getPenjual() as $key => $y)
-                                                {{ $y->nama_warung }}
-                                            @endforeach
-                                        </h3>
+                                        <h3 class="my-0">{{ $p->nama_warung }}</h3>
                                     </div>
                                 @endif
-                                @foreach ($p->getMenu($search) as $x)
+                                @foreach ($p->getMenu($p->id_penjual) as $x)
                                     <div class="col-lg-3 py-4">
                                         <div class="card border-0 rounded-4">
                                             <img src="{{ asset('menu/' . $x->picture) }}" class="card-img-top rounded-4"
@@ -102,7 +98,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if (count($p->getMenu($search)) == 0)
+                                    @if (count($p->getMenu($p->id_penjual)) == 0)
                                         <p style="text-align: center">menu tidak tersedia</p>
                                     @endif
                                 @endforeach
@@ -140,16 +136,12 @@
                     @else
                         @foreach ($penjual as $key => $p)
                             <div class="row">
-                                @if (count($p->getMenu($search)) > 0)
+                                @if (count($p->getMenu($p->id_penjual)) > 0)
                                     <div class="col-lg-12 px-3 py-2 bg-abu">
-                                        <h3 class="my-0">
-                                            @foreach ($p->getPenjual() as $key => $y)
-                                                {{ $y->nama_warung }}
-                                            @endforeach
-                                        </h3>
+                                        <h3 class="my-0">{{ $p->nama_warung }}</h3>
                                     </div>
                                 @endif
-                                @foreach ($p->getMenu($search) as $x)
+                                @foreach ($p->getMenu($p->id_penjual) as $x)
                                     <div class="col-lg-3 py-4">
                                         <div class="card border-0 rounded-4">
                                             <img src="{{ asset('menu/' . $x->picture) }}" class="card-img-top rounded-4"
@@ -161,7 +153,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if (count($p->getMenu($search)) == 0)
+                                    @if (count($p->getMenu($p->id_penjual)) == 0)
                                         <p style="text-align: center">menu tidak tersedia</p>
                                     @endif
                                 @endforeach

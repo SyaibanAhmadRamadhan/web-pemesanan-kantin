@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class PenjualModel extends Model
 {
@@ -14,8 +15,9 @@ class PenjualModel extends Model
         'id', 'id_penjual', 'nama', 'nama_warung', 'lokasi', 'nomer_telepon'
     ];
 
+
     public function getMenu($param)
     {
-        return $this->hasMany(DaftarMenuModel::class, 'id_penjual')->where('name_menu', 'LIKE', '%' . $param . '%')->get();
+        return DB::table('daftar_menu')->where('id_penjual', $param)->get();
     }
 }

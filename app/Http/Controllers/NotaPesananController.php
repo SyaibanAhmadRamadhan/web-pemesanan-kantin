@@ -15,11 +15,11 @@ class NotaPesananController extends Controller
     public function notaView($id)
     {
         $pesanan = PesananModel::where('nomer_pesanan', $id)->get();
-        $menu = User::where(function ($query) use ($pesanan) {
+        $menu = PenjualModel::where(function ($query) use ($pesanan) {
             foreach ($pesanan as $key => $x) {
-                $query->orWhere('id', $x->id_penjual);
+                $query->orWhere('id_penjual', $x->id_penjual);
             }
-        })->where('role', 'penjual')->get();
+        })->get();
         return view('pembeli.nota-pemesanan', [
             'title' => 'nota-pesanan',
             'search' => null,

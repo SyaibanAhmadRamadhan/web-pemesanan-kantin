@@ -46,13 +46,4 @@ class User extends Authenticatable
     {
         return $this->belongsTo(PembeliModel::class, 'id');
     }
-
-    public function getMenu($param)
-    {
-        return $this->hasMany(DaftarMenuModel::class, 'id_penjual')->where('name_menu', 'LIKE', '%' . $param . '%')->get();
-    }
-    public function getPenjual()
-    {
-        return $this->hasMany(PenjualModel::class, 'id_penjual')->get();
-    }
 }

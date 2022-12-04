@@ -46,7 +46,8 @@
                                         <button class="btn btn-auth1 px-5 py-2 mx-4" id="button_penjual"
                                             type="button">Penjual</button>
                                         <button class="btn btn-auth1 px-5 py-2 mx-4" id="button_pembeli"
-                                            type="button">Pembeli</button>
+                                            type="button">Pembeli</button><br><br>
+                                        <p>anda ingin melakukan login?<a href="{{ route('login.view') }}">Login</a></p>
                                     </div>
                                 </form>
                             </div>
@@ -88,7 +89,7 @@
                         $('.password_confirmation_err').text('');
                         $("#success").css('display', 'block');
                         $("#success").append(
-                            `<div>pendaftaran berhasil <a href="{{ route('login.view') }}">klik disni untuk login</a></div>`
+                            `<div>pendaftaran berhasil <a href="{{ route('login.view') }}">klik disini untuk login</a></div>`
                         );
                         $("#button").remove();
                     } else {

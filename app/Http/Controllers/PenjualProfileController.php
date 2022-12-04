@@ -18,7 +18,7 @@ class PenjualProfileController extends Controller
         $request->validate([
             'nama_warung' => 'required|unique:penjual',
             'lokasi' => 'required|unique:penjual',
-            'nomer_telepon' => 'required|unique:penjual',
+            'nomer_telepon' => 'required|unique:penjual|numeric',
         ]);
 
         try {

@@ -13,7 +13,7 @@ class PenjualDashboardController extends Controller
     {
         $notif = NotifPenjualModel::where('status', 'unread')->where('id_penjual', Auth()->user()->id)->get();
         $countPesanan = PesananModel::where('id_penjual', Auth()->user()->id)->count();
-        $countPembeli = PesananModel::distinct('id_user')->where('id_penjual', Auth()->user()->id)->select('id_user')->count();
+        $countPembeli = PesananModel::distinct('id_user')->where('id_penjual', Auth()->user()->id)->select('id_user')->where('status_pembayaran', 'sudah bayar')->where('status_pesanan', 'pesanan selesai')->count();
         $countMenu = DaftarMenuModel::where('id_penjual', Auth()->user()->id)->count();
         return view('penjual.dashboard', [
             'title' => 'dashboard',

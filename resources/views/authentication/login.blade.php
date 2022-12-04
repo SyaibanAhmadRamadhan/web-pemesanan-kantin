@@ -14,9 +14,16 @@
                         </div>
                         <div class="row justify-content-center pt-5">
                             <div class="col-lg-10">
-                                @if (session('errors'))
+                                @if (session('errors_login'))
                                     <div class="alert alert-danger" role="alert" id="allert">
-                                        {{ session('errors') }}
+                                        {{ session('errors_login') }}
+                                    </div>
+                                @endif
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        @foreach ($errors->all() as $error)
+                                            {{ $error }}<br>
+                                        @endforeach
                                     </div>
                                 @endif
                                 <form action="{{ route('login.process') }}" method="POST">
@@ -32,7 +39,8 @@
                                             class="form-control" />
                                     </div>
                                     <div class="text-center">
-                                        <button class="btn btn-auth px-5 py-2 mx-2" type="submit">Login</button>
+                                        <button class="btn btn-auth px-5 py-2 mx-2" type="submit">Login</button><br><br>
+                                        <p>Belum Mempunyai Akun?<a href="{{ route('register.view') }}">register</a></p>
                                     </div>
                                 </form>
                             </div>
