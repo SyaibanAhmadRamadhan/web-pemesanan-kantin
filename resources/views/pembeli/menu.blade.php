@@ -35,7 +35,11 @@
                             <div class="row">
                                 @if (count($p->getMenu($search)) > 0)
                                     <div class="col-lg-12 px-3 py-2 bg-abu">
-                                        <h3 class="my-0">{{ $p->nama_warung }}</h3>
+                                        <h3 class="my-0">
+                                            @foreach ($p->getPenjual() as $key => $y)
+                                                {{ $y->nama_warung }}
+                                            @endforeach
+                                        </h3>
                                     </div>
                                 @endif
                                 @foreach ($p->getMenu($search) as $x)
@@ -49,7 +53,7 @@
                                                     data-bs-target="#modalmesan{{ $x->id }}"></a>
                                                 <input type="hidden" value="{{ $x->id }}"
                                                     id="menu_id{{ $x->id }}">
-                                                <p class="card-text text-danger">Rp. {{ $x->price }}</p>
+                                                <p class="card-text text-danger">@rupiah($x->price)</p>
                                             </div>
                                         </div>
                                     </div>
@@ -138,7 +142,11 @@
                             <div class="row">
                                 @if (count($p->getMenu($search)) > 0)
                                     <div class="col-lg-12 px-3 py-2 bg-abu">
-                                        <h3 class="my-0">{{ $p->nama_warung }}</h3>
+                                        <h3 class="my-0">
+                                            @foreach ($p->getPenjual() as $key => $y)
+                                                {{ $y->nama_warung }}
+                                            @endforeach
+                                        </h3>
                                     </div>
                                 @endif
                                 @foreach ($p->getMenu($search) as $x)
@@ -149,7 +157,7 @@
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $x->name_menu }}</h5>
                                                 <a href="{{ route('login.view') }}" class="stretched-link"></a>
-                                                <p class="card-text text-danger">Rp. {{ $x->price }}</p>
+                                                <p class="card-text text-danger">@rupiah($x->price)</p>
                                             </div>
                                         </div>
                                     </div>

@@ -25,7 +25,7 @@
                                             <div class="mt-2 mb-0 text-muted text-xs">
                                                 <span class="text-success mr-2">
                                                     Total Pesanan : </span>
-                                                <span>{{ $countPesanan }}</span>
+                                                <span>{{ $countPesanan }} </span>
                                             </div>
                                         </div>
                                         <div class="col-auto">

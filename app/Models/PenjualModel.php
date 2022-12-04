@@ -14,9 +14,5 @@ class PenjualModel extends Model
         'id', 'id_penjual', 'nama', 'nama_warung', 'lokasi', 'nomer_telepon'
     ];
 
-    public function getMenu($param)
-    {
-        return $this->hasMany(DaftarMenuModel::class, 'id_penjual')->where('name_menu', 'LIKE', '%' . $param . '%')->get();
-    }
     
 }

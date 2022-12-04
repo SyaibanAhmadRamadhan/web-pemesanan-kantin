@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DaftarMenuModel;
 use App\Models\PenjualModel;
 use App\Models\PesananModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -13,8 +14,8 @@ class MenuController extends Controller
 {
     public function menuView()
     {
-        $menu = DaftarMenuModel::all();
-        $penjual = PenjualModel::all();
+        $menu = DaftarMenuModel::get();
+        $penjual = User::where('role', 'penjual')->get();
 
         return view('pembeli.menu', [
             'title' => 'menu',
