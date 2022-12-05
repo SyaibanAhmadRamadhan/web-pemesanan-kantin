@@ -41,64 +41,52 @@
                                         @foreach ($p->getMenu($p->id_penjual) as $x)
                                             @foreach ($sessionPemesanan as $key => $z)
                                                 @if (substr($key, 3) == $x->id)
-                                                    <div class="d-flex border-bottom border-2 py-4">
+                                                    <div class="d-flex border-2 py-4">
                                                         <img src="{{ asset('menu/' . $x->picture) }}" alt="" />
                                                         <div class="mt-auto ps-3">
                                                             <p class="mt-0">{{ $x->name_menu }}</p>
-                                                            <p class="text-danger mb-0">@rupiah($x->price)</p>
-                                                            <div class="row mb-3">
-                                                                <div class="col-3 my-auto">
-                                                                    <p class="my-auto">Qty</p>
-                                                                </div>
-                                                                <div class="col-1 my-auto">
-                                                                    <p class="my-auto">:</p>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <input id="qty{{ $x->id }}" type="number"
-                                                                        min="1" name="qty"
-                                                                        value="{{ $z }}" class="form-control" />
-                                                                </div>
-                                                            </div>
+                                                            <p class="text-danger mb-0">{{ $z }}x</p>
+
                                                             {{-- <p class="text-danger mb-0">1x</p> --}}
                                                         </div>
-                                                        <div class="text-end w-100 mt-auto mb-0">
-                                                            <p id="totalMenu{{ $x->id }}">
-                                                                @php
-                                                                    $total = $x->price * $z;
-                                                                @endphp
-                                                                @rupiah($total)
-                                                            </p>
-                                                            <a href="#" class="btn btn-sm btn-danger"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#hapusModal{{ $x->id }}">Hapus</a>
-                                                            <div class="modal fade" id="hapusModal{{ $x->id }}"
-                                                                tabindex="-1" role="dialog"
-                                                                aria-labelledby="exampleModalLabelLogout"
-                                                                aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <p>Anda Ingin Menghapus Menu
-                                                                                '{{ $x->name_menu }}'?</p>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                class="btn btn-outline-primary"
-                                                                                data-bs-dismiss="modal">Cancel</button>
-                                                                            <form
-                                                                                action="{{ route('pemesanan.delete.process', ['id' => $x->id]) }}"
-                                                                                method="POST">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit"
-                                                                                    class="btn btn-danger">Hapus</button>
-                                                                            </form>
-                                                                        </div>
+                                                    </div>
+                                                    <div class="text-end w-100 mt-auto mb-0">
+                                                        <p id="totalMenu{{ $x->id }}">
+                                                            @php
+                                                                $total = $x->price * $z;
+                                                            @endphp
+                                                            @rupiah($total)
+                                                        </p>
+                                                        <a href="#" class="btn btn-sm btn-danger"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#hapusModal{{ $x->id }}">Hapus</a>
+                                                        <div class="modal fade" id="hapusModal{{ $x->id }}"
+                                                            tabindex="-1" role="dialog"
+                                                            aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <p>Anda Ingin Menghapus Menu
+                                                                            '{{ $x->name_menu }}'?</p>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-outline-primary"
+                                                                            data-bs-dismiss="modal">Cancel</button>
+                                                                        <form
+                                                                            action="{{ route('pemesanan.delete.process', ['id' => $x->id]) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit"
+                                                                                class="btn btn-danger">Hapus</button>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="border-bottom"></div>
                                                 @endif
                                             @endforeach
 
@@ -149,48 +137,4 @@
         @endif
 
     </section>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    @if ($urlStatus == true)
-        <script>
-            @foreach (session('pemesanan') as $key => $x)
-                $("#qty{{ substr($key, 3) }}").on("keyup change", function() {
-                    let qty = 'qty{{ substr($key, 3) }}';
-                    let valQty = $("#qty{{ substr($key, 3) }}").val();
-                    $.ajax({
-                        type: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{ route('pemesanan.update.session') }}",
-                        data: {
-                            qty: qty,
-                            valQty: valQty,
-                        },
-                        success: function(data) {
-                            if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500)) {
-                                const rupiah = (number) => {
-                                    return new Intl.NumberFormat("id-ID", {
-                                        style: "currency",
-                                        currency: "IDR",
-                                        minimumFractionDigits: 0,
-                                    }).format(number);
-                                }
-                                $("#totalMenu{{ substr($key, 3) }}").text(rupiah(data.total));
-                                $("#subTotal").text(rupiah(data.subTotal));
-                            } else {
-                                if (data.error500) {
-                                    if (alert('maaf terjadi kesalah pada server')) {} else window
-                                        .location.reload();
-                                } else {
-                                    if (alert('maaf terjadi kesalahan')) {} else window
-                                        .location.reload();
-                                }
-                            }
-                        }
-                    })
-                })
-            @endforeach
-        </script>
-    @endif
 @endsection
