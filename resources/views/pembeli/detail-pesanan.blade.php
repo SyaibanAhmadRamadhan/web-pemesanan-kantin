@@ -42,8 +42,7 @@
                                             @foreach ($sessionPemesanan as $key => $z)
                                                 @if (substr($key, 3) == $x->id)
                                                     <div class="d-flex border-bottom border-2 py-4">
-                                                        <img src="{{ asset('menu/' . $x->picture) }}" width="110"
-                                                            alt="" />
+                                                        <img src="{{ asset('menu/' . $x->picture) }}" alt="" />
                                                         <div class="mt-auto ps-3">
                                                             <p class="mt-0">{{ $x->name_menu }}</p>
                                                             <p class="text-danger mb-0">@rupiah($x->price)</p>

@@ -41,8 +41,8 @@
                                 @foreach ($p->getMenu($p->id_penjual) as $x)
                                     <div class="col-lg-3 py-4">
                                         <div class="card border-0 rounded-4">
-                                            <img src="{{ asset('menu/' . $x->picture) }}" class="card-img-top rounded-4"
-                                                alt="..." />
+                                            <img src="{{ asset('menu/' . $x->picture) }}"
+                                                class="card-img-top rounded-4 menu-img-display" alt="..." />
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $x->name_menu }}</h5>
                                                 <a href="#" class="stretched-link" data-bs-toggle="modal"
@@ -60,7 +60,7 @@
                                                 <div class="modal-body">
                                                     <div class="card border-0 rounded-4">
                                                         <img src="{{ asset('menu/' . $x->picture) }}"
-                                                            class="card-img-top rounded-4" alt="..." />
+                                                            class="card-img-top rounded-4 menu-img-modal" alt="..." />
                                                         <div class="card-body">
                                                             <h5 class="card-title">{{ $x->name_menu }}</h5>
                                                             <p class="card-text text-danger">Rp. {{ $x->price }}
@@ -144,8 +144,8 @@
                                 @foreach ($p->getMenu($p->id_penjual) as $x)
                                     <div class="col-lg-3 py-4">
                                         <div class="card border-0 rounded-4">
-                                            <img src="{{ asset('menu/' . $x->picture) }}" class="card-img-top rounded-4"
-                                                alt="..." />
+                                            <img src="{{ asset('menu/' . $x->picture) }}"
+                                                class="card-img-top rounded-4 menu-img-display" alt="..." />
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $x->name_menu }}</h5>
                                                 <a href="{{ route('login.view') }}" class="stretched-link"></a>
