@@ -53,10 +53,14 @@
                                                         <p class="mt-0">@rupiah($x->price)</p>
                                                         <p class="text-danger mb-0">{{ $z->jumlah_pesanan }}x</p>
                                                     </div>
-                                                    <p class="text-end w-100 mt-auto mb-0">@rupiah($z->total_harga)</p>
+
                                                 </div>
-                                                <p class="text-end w-100 mt-auto mb-0 text-info">{{ $z->status_pesanan }}
-                                                </p><br>
+                                                <div class="text-end w-100 mt-auto mb-0">
+                                                    <p> @rupiah($z->total_harga) </p>
+                                                    <p class="text-end w-100 mt-auto mb-0 text-info">
+                                                        {{ $z->status_pesanan }}
+                                                    </p><br>
+                                                </div>
                                                 <div class="border-bottom "></div>
                                                 @php
                                                     $subTotal += $z->total_harga;

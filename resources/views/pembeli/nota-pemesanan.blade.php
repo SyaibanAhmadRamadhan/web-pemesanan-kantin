@@ -50,15 +50,18 @@
                                                 <div class="d-flex border-2 py-4">
                                                     <img src="{{ asset('menu/' . $x->picture) }}" width="110"
                                                         alt="" />
-                                                    <div class="mt-auto ps-4">
+                                                    <div class="mt-auto ps-3">
                                                         <p class="mt-0">{{ $x->name_menu }}</p>
-                                                        <p class="mt-0">@rupiah($x->price)</p>
+                                                        <p class="mb-0">@rupiah($x->price)</p>
                                                         <p class="text-danger mb-0">{{ $z->jumlah_pesanan }}x</p>
                                                     </div>
-                                                    <p class="text-end w-100 mt-auto mb-0">@rupiah($z->total_harga)</p>
                                                 </div>
-                                                <p class="text-end w-100 mt-auto mb-0 text-info">{{ $z->status_pesanan }}
-                                                </p><br>
+                                                <div class="text-end w-100 mt-auto mb-0">
+                                                    <p> @rupiah($z->total_harga) </p>
+                                                    <p class="text-end w-100 mt-auto mb-0 text-info">
+                                                        {{ $z->status_pesanan }}
+                                                    </p><br>
+                                                </div>
                                                 <div class="border-bottom "></div>
                                                 @php
                                                     $subTotal += $z->total_harga;
