@@ -36,6 +36,7 @@ class PenjualMenuController extends Controller
         $request->validate([
             'name_menu' => 'required|unique:daftar_menu',
             'price' => 'required|numeric',
+            'stock' => 'required|numeric',
             'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $imageName = time() . '.' . $request->picture->extension();
@@ -44,6 +45,7 @@ class PenjualMenuController extends Controller
                 'id_penjual' => Auth()->user()->id,
                 'name_menu' => $request->name_menu,
                 'price' => $request->price,
+                'stock' => $request->stock,
                 'picture' => $imageName,
             ]);
             $request->picture->move(public_path('menu'), $imageName);
@@ -72,6 +74,7 @@ class PenjualMenuController extends Controller
         $request->validate([
             'name_menu' => 'required|unique:daftar_menu,name_menu,' . $id,
             'price' => 'required|numeric',
+            'stock' => 'required|numeric',
             'picture' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -82,6 +85,7 @@ class PenjualMenuController extends Controller
                     'id_penjual' => Auth()->user()->id,
                     'name_menu' => $request->name_menu,
                     'price' => $request->price,
+                    'stock' => $request->stock,
                     'picture' => $imageName,
                 ]);
                 $request->picture->move(public_path('menu'), $imageName);
@@ -93,6 +97,7 @@ class PenjualMenuController extends Controller
                     'id_penjual' => Auth()->user()->id,
                     'name_menu' => $request->name_menu,
                     'price' => $request->price,
+                    'stock' => $request->stock,
                 ]);
             }
         } catch (\Throwable $th) {

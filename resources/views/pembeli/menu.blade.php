@@ -35,7 +35,7 @@
                             <div class="row">
                                 @if (count($p->getMenu($p->id_penjual)) > 0)
                                     <div class="col-lg-12 px-3 py-2 bg-abu">
-                                        <h3 class="my-0">{{ $p->nama_warung }}</h3>
+                                        <h3 class="my-0">{{ $p->nama_warung }} | {{ $p->lokasi }}</h3>
                                     </div>
                                 @endif
                                 @foreach ($p->getMenu($p->id_penjual) as $x)
@@ -63,8 +63,20 @@
                                                             class="card-img-top rounded-4 menu-img-modal" alt="..." />
                                                         <div class="card-body">
                                                             <h5 class="card-title">{{ $x->name_menu }}</h5>
+                                                            <p class="card-text">Lokasi {{ $p->lokasi }}
                                                             <p class="card-text text-danger">Rp. {{ $x->price }}
                                                             </p>
+                                                            <div class="row mb-3">
+                                                                <div class="col-3 my-auto">
+                                                                    <p class="my-auto">Stock</p>
+                                                                </div>
+                                                                <div class="col-1 my-auto">
+                                                                    <p class="my-auto">:</p>
+                                                                </div>
+                                                                <div class="col">
+                                                                    {{ $x->stock }} pcs
+                                                                </div>
+                                                            </div>
                                                             <div class="row mb-3">
                                                                 <div class="col-3 my-auto">
                                                                     <p class="my-auto">Qty</p>
@@ -76,11 +88,13 @@
                                                                     @if (session('pemesanan'))
                                                                         <input type="number" min="1" name="qty"
                                                                             id="qty{{ $x->id }}"
+                                                                            max="{{ $x->stock }}"
                                                                             @foreach (session('pemesanan') as $key => $s) @if (substr($key, 3) == $x->id) value="{{ $s }}" @break @endif @endforeach
                                                                             class="form-control" />
                                                                     @else
                                                                         <input type="number" min="1" name="qty"
                                                                             id="qty{{ $x->id }}" value="1"
+                                                                            max="{{ $x->stock }}"
                                                                             class="form-control" />
                                                                     @endif
                                                                 </div>
@@ -190,9 +204,11 @@
                     data: {
                         qty: qty,
                         valQty: valQty,
+                        stock: "{{ $x->stock }}"
                     },
                     success: function(data) {
-                        if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500)) {
+                        if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500) && $
+                            .isEmptyObject(data.errorRefresh)) {
                             Swal.fire({
                                 icon: "success",
                                 text: "Pesanan Berhasil Dimasukan",
@@ -208,6 +224,9 @@
                         } else {
                             if (data.error500) {
                                 if (alert('maaf terjadi kesalah pada server')) {} else window
+                                    .location.reload();
+                            } else if (data.errorRefresh) {
+                                if (alert('pemesanan tidak boleh melebihi stock')) {} else window
                                     .location.reload();
                             } else {
                                 Swal.fire({

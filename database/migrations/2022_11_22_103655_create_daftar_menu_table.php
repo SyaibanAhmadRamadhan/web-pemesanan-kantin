@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('id_penjual')->constrained('users')->onDelete('CASCADE')->onUpdate('CASCADE');
             $table->string('name_menu');
             $table->integer('price');
+            $table->integer('stock');
             $table->string('picture');
             $table->timestamps();
         });

@@ -57,8 +57,8 @@
                                                                 <div class="col">
                                                                     <input type="number" id="qty{{ $x->id }}"
                                                                         min="1" value="{{ $z }}"
-                                                                        name="qty" value="1"
-                                                                        class="form-control" />
+                                                                        max="{{ $x->stock }}" name="qty"
+                                                                        value="1" class="form-control" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -168,7 +168,8 @@
                             valQty: valQty,
                         },
                         success: function(data) {
-                            if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500)) {
+                            if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500) && $
+                                .isEmptyObject(data.errorRefresh)) {
                                 const rupiah = (number) => {
                                     return new Intl.NumberFormat("id-ID", {
                                         style: "currency",
@@ -181,6 +182,9 @@
                             } else {
                                 if (data.error500) {
                                     if (alert('maaf terjadi kesalah pada server')) {} else window
+                                        .location.reload();
+                                } else if (data.errorRefresh) {
+                                    if (alert('pemesanan tidak boleh melebihi stock')) {} else window
                                         .location.reload();
                                 } else {
                                     if (alert('maaf pesanan anda harus lebih dari 0')) {} else window

@@ -38,7 +38,16 @@
                                             <span style="color: red;">{{ $message }}</span>
                                         @enderror
                                     </div>
-
+                                </div>
+                                <div class="form-group row">
+                                    <label for="stock" class="col-sm-3 col-form-label">Stock Menu</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="stock" name="stock"
+                                            placeholder="Ex : 10" value="{{ old('stock') }}">
+                                        @error('stock')
+                                            <span style="color: red;">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="picture" class="col-sm-3 col-form-label">Gambar Menu</label>

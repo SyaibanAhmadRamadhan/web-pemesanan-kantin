@@ -59,6 +59,10 @@ class DetailPesananController extends Controller
         if ($request->valQty < 1) {
             return response()->json(['error' => 'pemesanan harus lebih dari 1']);
         }
+        $stock = DaftarMenuModel::where('id', substr($request->qty, 3))->first();
+        if ($request->valQty > $stock->stock) {
+            return response()->json(['errorRefresh' => 'pemesanan tidak boleh melebihi stock']);
+        }
         try {
             $obj = [];
             $obj[$request->qty] = $request->valQty;
@@ -136,6 +140,9 @@ class DetailPesananController extends Controller
                 'total_harga' => $x * $menu->price,
                 'id_menu' => $menu->id,
                 'status_pembayaran' => 'belum bayar'
+            ]);
+            DaftarMenuModel::where('id', $menu->id)->update([
+                'stock' => $menu->stock - $x
             ]);
         }
         session()->forget('pemesanan');

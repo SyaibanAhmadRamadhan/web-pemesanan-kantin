@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DaftarMenuModel;
 use App\Models\NotifPenjualModel;
 use App\Models\PenjualModel;
 use App\Models\PesananModel;
@@ -17,6 +18,10 @@ class KasirController extends Controller
             if (substr($x->created_at, 0, 10) != date('Y-m-d') && $x->status_pembayaran == 'belum bayar') {
                 PesananModel::where('id', $x->id)->update([
                     'status_pesanan' => 'dibatalkan'
+                ]);
+                $menu = DaftarMenuModel::where('id', $x->id_menu)->first();
+                DaftarMenuModel::where('id', $x->id_menu)->update([
+                    'stock' => $menu->stock + $x->jumlah_pesanan
                 ]);
             }
         }
@@ -77,7 +82,7 @@ class KasirController extends Controller
         if (count($pesanan) == 0) {
             return back()->with('info', 'pesanan tidak tersedia');
         }
-        try {   
+        try {
             foreach ($pesanan as $key => $x) {
                 PesananModel::where('nomer_pesanan', $x->nomer_pesanan)->update([
                     'status_pembayaran' => 'sudah bayar',

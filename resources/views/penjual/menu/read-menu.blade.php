@@ -25,6 +25,8 @@
                                             <tr>
                                                 <th style="text-align: center">Nama Menu</th>
                                                 <th style="text-align: center">Harga Menu</th>
+                                                <th style="text-align: center">Stock Menu</th>
+                                                <th style="text-align: center">picture</th>
                                                 <th style="text-align: center">Action</th>
                                             </tr>
                                         </thead>
@@ -33,55 +35,17 @@
                                                 <tr>
                                                     <td style="text-align: center">{{ $x->name_menu }}</td>
                                                     <td style="text-align: center">@rupiah($x->price)</td>
+                                                    <td style="text-align: center">{{ $x->stock }}</td>
+                                                    <td class="w-25" style="text-align: center">
+                                                        <img src="{{ asset('menu/' . $x->picture) }}"
+                                                            style="max-width: 100px; max-height: 100px; object-fit: contain"
+                                                            class="img-fluid img-thumbnail" alt="Sheep">
+                                                    </td>
                                                     <td style="text-align: center">
-                                                        <a href="#" class="btn btn-sm btn-info" data-toggle="modal"
-                                                            data-target="#detailModal{{ $x->id }}">Detail</a>&emsp;
                                                         <a href="{{ route('menu.edit.view', ['id' => $x->id]) }}"
                                                             class="btn btn-sm btn-primary">Edit</a>&emsp;
                                                         <a href="#" class="btn btn-sm btn-danger" data-toggle="modal"
                                                             data-target="#hapusModal{{ $x->id }}">Hapus</a>
-                                                        <div class="modal fade" id="detailModal{{ $x->id }}"
-                                                            tabindex="-1" role="dialog"
-                                                            aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title"
-                                                                            id="exampleModalLabelLogout">Detail Menu
-                                                                            {{ $x->name_menu }}</h5>
-                                                                        <button type="button" class="close"
-                                                                            data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <table class="table align-items-center table-flush">
-                                                                            <tr>
-                                                                                <td colspan="2"
-                                                                                    style="text-align: center"><img
-                                                                                        src="{{ asset('menu/' . $x->picture) }}"
-                                                                                        alt=""></td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <th>nama menu</th>
-                                                                                <th>harga menu</th>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td>{{ $x->name_menu }}</td>
-                                                                                <td>{{ $x->price }}</td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button"
-                                                                            class="btn btn-outline-primary"
-                                                                            data-dismiss="modal">Close</button>
-                                                                        <a href="{{ route('menu.edit.view', ['id' => $x->id]) }}"
-                                                                            class="btn btn-primary">Edit</a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                         <div class="modal fade" id="hapusModal{{ $x->id }}"
                                                             tabindex="-1" role="dialog"
                                                             aria-labelledby="exampleModalLabelLogout" aria-hidden="true">

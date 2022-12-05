@@ -12,7 +12,7 @@ class DaftarMenuModel extends Model
     protected $table = 'daftar_menu';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id', 'name_menu', 'price', 'picture', 'id_penjual'
+        'id', 'name_menu', 'price', 'picture', 'id_penjual', 'stock'
     ];
 
     public function getPenjual($param)

@@ -45,6 +45,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label for="stock" class="col-sm-3 col-form-label">Stock Menu</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control"
+                                            @error('stock') value="{{ old('stock') }}" @else value="{{ $menu->stock }}" @enderror
+                                            id="stock" name="stock" placeholder="Ex : 10">
+                                        @error('stock')
+                                            <span style="color: red;">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <input type="hidden" name="oldPic" value="profile.svg">
                                     <label for="picture" class="col-sm-3 col-form-label">Gambar Menu</label>
                                     <div class="col-md-6 col-sm-6 col-xs-12">

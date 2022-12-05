@@ -14,6 +14,18 @@ class NotaPesananController extends Controller
 {
     public function notaView($id)
     {
+        $pesananAll = PesananModel::all();
+        foreach ($pesananAll as $key => $x) {
+            if (substr($x->created_at, 0, 10) != date('Y-m-d') && $x->status_pembayaran == 'belum bayar') {
+                PesananModel::where('id', $x->id)->update([
+                    'status_pesanan' => 'dibatalkan'
+                ]);
+                $menu = DaftarMenuModel::where('id', $x->id_menu)->first();
+                DaftarMenuModel::where('id', $x->id_menu)->update([
+                    'stock' => $menu->stock + $x->jumlah_pesanan
+                ]);
+            }
+        }
         $pesanan = PesananModel::where('nomer_pesanan', $id)->get();
         $menu = PenjualModel::where(function ($query) use ($pesanan) {
             foreach ($pesanan as $key => $x) {

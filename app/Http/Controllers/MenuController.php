@@ -49,7 +49,10 @@ class MenuController extends Controller
         if ($request->valQty < 1) {
             return response()->json(['error' => 'pemesanan harus lebih dari 1']);
         }
-        if (PesananModel::where('id_user', Auth()->user()->id)->where('status_pembayaran', 'belum bayar')->first()) {
+        if ($request->valQty > $request->stock) {
+            return response()->json(['errorRefresh' => 'pemesanan tidak boleh melebihi stock']);
+        }
+        if (PesananModel::where('id_user', Auth()->user()->id)->where('status_pembayaran', 'belum bayar')->where('status_pesanan', '!=', 'dibatalkan')->first()) {
             return response()->json(['error' => 'silahkan lakukan pembayaran pada pesanan anda sebelumnya']);
         }
         try {
