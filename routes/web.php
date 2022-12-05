@@ -72,6 +72,8 @@ Route::prefix('/')->group(function () {
 Route::prefix('/penjual')->group(function () {
     // dashboard
     Route::get('dashboard', [PenjualDashboardController::class, 'dashboardView'])->name('dashboard.view')->middleware('penjual');
+    Route::get('profile', [PenjualProfileController::class, 'viewProfile'])->name('profile.penjual.view')->middleware('penjual');
+    Route::put('edit-profile', [PenjualProfileController::class, 'editProfileProcess'])->name('profile.penjual.edit.process')->middleware('penjual');
     // end dasboard
 
     // input data penjual
