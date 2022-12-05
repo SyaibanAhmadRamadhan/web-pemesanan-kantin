@@ -42,12 +42,25 @@
                                             @foreach ($sessionPemesanan as $key => $z)
                                                 @if (substr($key, 3) == $x->id)
                                                     <div class="d-flex border-2 py-4">
-                                                        <img src="{{ asset('menu/' . $x->picture) }}" alt="" />
+                                                        <div>
+                                                            <img src="{{ asset('menu/' . $x->picture) }}" alt="" />
+                                                        </div>
                                                         <div class="mt-auto ps-3">
                                                             <p class="mt-0">{{ $x->name_menu }}</p>
-                                                            <p class="text-danger mb-0">{{ $z }}x</p>
-
-                                                            {{-- <p class="text-danger mb-0">1x</p> --}}
+                                                            <div class="row mb-3">
+                                                                <div class="col-3 my-auto">
+                                                                    <p class="my-auto">Qty</p>
+                                                                </div>
+                                                                <div class="col-1 my-auto">
+                                                                    <p class="my-auto">:</p>
+                                                                </div>
+                                                                <div class="col">
+                                                                    <input type="number" id="qty{{ $x->id }}"
+                                                                        min="1" value="{{ $z }}"
+                                                                        name="qty" value="1"
+                                                                        class="form-control" />
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="text-end w-100 mt-auto mb-0">
@@ -85,7 +98,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </div><br>
                                                     <div class="border-bottom"></div>
                                                 @endif
                                             @endforeach
@@ -137,4 +150,47 @@
         @endif
 
     </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    @if ($urlStatus == true)
+        <script>
+            @foreach (session('pemesanan') as $key => $x)
+                $("#qty{{ substr($key, 3) }}").on("change", function() {
+                    let qty = 'qty{{ substr($key, 3) }}';
+                    let valQty = $("#qty{{ substr($key, 3) }}").val();
+                    $.ajax({
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ route('pemesanan.update.session') }}",
+                        data: {
+                            qty: qty,
+                            valQty: valQty,
+                        },
+                        success: function(data) {
+                            if ($.isEmptyObject(data.error) && $.isEmptyObject(data.error500)) {
+                                const rupiah = (number) => {
+                                    return new Intl.NumberFormat("id-ID", {
+                                        style: "currency",
+                                        currency: "IDR",
+                                        minimumFractionDigits: 0,
+                                    }).format(number);
+                                }
+                                $("#totalMenu{{ substr($key, 3) }}").text(rupiah(data.total));
+                                $("#subTotal").text(rupiah(data.subTotal));
+                            } else {
+                                if (data.error500) {
+                                    if (alert('maaf terjadi kesalah pada server')) {} else window
+                                        .location.reload();
+                                } else {
+                                    if (alert('maaf pesanan anda harus lebih dari 0')) {} else window
+                                        .location.reload();
+                                }
+                            }
+                        }
+                    })
+                })
+            @endforeach
+        </script>
+    @endif
 @endsection

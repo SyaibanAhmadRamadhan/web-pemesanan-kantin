@@ -20,4 +20,8 @@ class PenjualModel extends Model
     {
         return DB::table('daftar_menu')->where('id_penjual', $param)->get();
     }
+    public function getMenuSearch($param, $param2)
+    {
+        return DB::table('daftar_menu')->where('name_menu', 'LIKE', '%' . $param . '%')->where('id_penjual', $param2)->get();
+    }
 }

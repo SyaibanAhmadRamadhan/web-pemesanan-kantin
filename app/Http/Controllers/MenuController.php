@@ -91,7 +91,7 @@ class MenuController extends Controller
             $penjual = [];
         }
 
-        return view('pembeli.menu', [
+        return view('pembeli.menu-search', [
             'title' => 'menu',
             'menu' => $menu,
             'penjual' => $penjual,
