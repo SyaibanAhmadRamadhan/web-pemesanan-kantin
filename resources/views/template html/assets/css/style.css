@@ -44,6 +44,11 @@ nav .img-profile {
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   transition: 0.4s;
 }
+
+#menu img {
+  max-height: 300px;
+  object-fit: cover;
+}
 /* Menu */
 
 /* Akun */
@@ -73,6 +78,11 @@ nav .img-profile {
   border: none;
 }
 /* auth */
+
+#dpesanan img {
+  height: 100px;
+  object-fit: cover;
+}
 
 @media only screen and (max-width: 991px) {
   #dpesanan .dtotal {
